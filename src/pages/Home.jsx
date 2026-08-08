@@ -10,6 +10,10 @@ import { useEffect, useState } from "react";
 import { Paginacion } from "../components/Paginacion.jsx";
 import { TarjetaArticulo } from "../components/TarjetaArticulo.jsx";
 import { formatearFecha } from "../lib/fechas.js";
+import {
+    nombreTransicionImagen,
+    nombreTransicionTitulo,
+} from "../lib/transiciones.js";
 import { Enlace } from "../router/Router.jsx";
 import {
     ARTICULOS_POR_PAGINA,
@@ -143,10 +147,22 @@ export const Home = () => {
                     {destacado.image_url ? (
                         <div
                             className="hero__media"
-                            style={{ backgroundImage: `url("${destacado.image_url}")` }}
+                            style={{
+                                backgroundImage: `url("${destacado.image_url}")`,
+                                viewTransitionName: nombreTransicionImagen(
+                                    destacado.slug
+                                ),
+                            }}
                         ></div>
                     ) : (
-                        <div className="hero__media hero__media--placeholder"></div>
+                        <div
+                            className="hero__media hero__media--placeholder"
+                            style={{
+                                viewTransitionName: nombreTransicionImagen(
+                                    destacado.slug
+                                ),
+                            }}
+                        ></div>
                     )}
                     <div className="hero__overlay"></div>
                     <div className="hero__content">
@@ -159,7 +175,14 @@ export const Home = () => {
                                 {formatearFecha(destacado.created_at)}
                             </span>
                         </div>
-                        <h1 className="hero__title text-headline-lg-mobile">
+                        <h1
+                            className="hero__title text-headline-lg-mobile"
+                            style={{
+                                viewTransitionName: nombreTransicionTitulo(
+                                    destacado.slug
+                                ),
+                            }}
+                        >
                             {destacado.title}
                         </h1>
                         <p className="hero__excerpt text-body-lg">

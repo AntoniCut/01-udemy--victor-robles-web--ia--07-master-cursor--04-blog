@@ -8,6 +8,10 @@
 
 import { useEffect, useState } from "react";
 import { calcularMinutosLectura, formatearFecha } from "../lib/fechas.js";
+import {
+    nombreTransicionImagen,
+    nombreTransicionTitulo,
+} from "../lib/transiciones.js";
 import { Enlace } from "../router/Router.jsx";
 import {
     leerCachePorSlug,
@@ -40,6 +44,9 @@ export const DetalleArticulo = ({ slug }) => {
         /** - `bandera para ignorar respuestas de una petición cancelada` */
         let cancelado = false;
 
+        //  -----  limpiar relacionados al instante para no duplicar view-transition-name  -----
+        setRelacionados([]);
+
         //  -----  si hay caché, pintar al instante sin vaciar la pantalla  -----
         const cache = leerCachePorSlug(slug);
         if (cache) {
@@ -47,7 +54,6 @@ export const DetalleArticulo = ({ slug }) => {
             setCargando(false);
         } else {
             setArticulo(null);
-            setRelacionados([]);
             setCargando(true);
         }
 
@@ -63,7 +69,10 @@ export const DetalleArticulo = ({ slug }) => {
             if (encontrado) {
                 const otros = await obtenerRelacionados(slug);
                 if (!cancelado) {
-                    setRelacionados(otros);
+                    //  -----  excluir el artículo actual por si la API lo devolviera  -----
+                    setRelacionados(
+                        otros.filter((relacionado) => relacionado.slug !== slug)
+                    );
                 }
             } else {
                 setRelacionados([]);
@@ -120,7 +129,12 @@ export const DetalleArticulo = ({ slug }) => {
             <article className="article">
                 <header className="article__header">
                     <div className="badge article__badge">Noticia</div>
-                    <h1 className="article__title text-headline-xl">
+                    <h1
+                        className="article__title text-headline-xl"
+                        style={{
+                            viewTransitionName: nombreTransicionTitulo(articulo.slug),
+                        }}
+                    >
                         {articulo.title}
                     </h1>
                     <div className="article__byline text-label-md">
@@ -135,14 +149,33 @@ export const DetalleArticulo = ({ slug }) => {
                             </span>
                         </div>
                     </div>
-                    {articulo.image_url && (
+                    {articulo.image_url ? (
                         <div className="article__cover">
                             <img
                                 className="article__cover-image"
                                 src={articulo.image_url}
                                 alt={articulo.title}
+                                style={{
+                                    viewTransitionName: nombreTransicionImagen(
+                                        articulo.slug
+                                    ),
+                                }}
                             />
                             <div className="article__cover-overlay"></div>
+                        </div>
+                    ) : (
+                        <div
+                            className="article__cover article__cover--placeholder"
+                            style={{
+                                viewTransitionName: nombreTransicionImagen(
+                                    articulo.slug
+                                ),
+                            }}
+                            aria-hidden="true"
+                        >
+                            <span className="material-symbols-outlined material-symbols-outlined--xl">
+                                sports_esports
+                            </span>
                         </div>
                     )}
                 </header>

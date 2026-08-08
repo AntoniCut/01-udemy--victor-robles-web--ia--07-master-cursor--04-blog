@@ -7,6 +7,10 @@
 /// <reference path="../../types/types.d.js" />
 
 import { formatearFecha } from "../lib/fechas.js";
+import {
+    nombreTransicionImagen,
+    nombreTransicionTitulo,
+} from "../lib/transiciones.js";
 import { Enlace } from "../router/Router.jsx";
 
 /**
@@ -30,9 +34,22 @@ export const TarjetaArticulo = ({ articulo }) => {
                             className="article-card__image"
                             src={articulo.image_url}
                             alt={articulo.title}
+                            style={{
+                                viewTransitionName: nombreTransicionImagen(
+                                    articulo.slug
+                                ),
+                            }}
                         />
                     ) : (
-                        <div className="article-card__placeholder" aria-hidden="true">
+                        <div
+                            className="article-card__placeholder"
+                            aria-hidden="true"
+                            style={{
+                                viewTransitionName: nombreTransicionImagen(
+                                    articulo.slug
+                                ),
+                            }}
+                        >
                             <span className="material-symbols-outlined material-symbols-outlined--xl">
                                 sports_esports
                             </span>
@@ -47,7 +64,14 @@ export const TarjetaArticulo = ({ articulo }) => {
                             {formatearFecha(articulo.created_at)}
                         </span>
                     </div>
-                    <h3 className="article-card__title text-headline-sm">
+                    <h3
+                        className="article-card__title text-headline-sm"
+                        style={{
+                            viewTransitionName: nombreTransicionTitulo(
+                                articulo.slug
+                            ),
+                        }}
+                    >
                         {articulo.title}
                     </h3>
                     <p className="article-card__excerpt text-body-md">

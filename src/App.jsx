@@ -108,7 +108,8 @@ export const App = () => {
     } else if (ruta.startsWith("/articulo/")) {
         /** - `slug del artículo extraído de la ruta` */
         const slug = ruta.replace("/articulo/", "");
-        contenidoPublico = <DetalleArticulo slug={slug} />;
+        //  -----  key=slug reinicia el estado y evita view-transition-name duplicados  -----
+        contenidoPublico = <DetalleArticulo key={slug} slug={slug} />;
     }
 
     return (

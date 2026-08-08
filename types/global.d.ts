@@ -15,3 +15,16 @@ interface ImportMetaEnv {
 interface ImportMeta {
     readonly env: ImportMetaEnv;
 }
+
+interface ViewTransition {
+    readonly ready: Promise<void>;
+    readonly finished: Promise<void>;
+    readonly updateCallbackDone: Promise<void>;
+    skipTransition: () => void;
+}
+
+interface Document {
+    startViewTransition?: (
+        actualizar?: () => void | Promise<void>
+    ) => ViewTransition;
+}

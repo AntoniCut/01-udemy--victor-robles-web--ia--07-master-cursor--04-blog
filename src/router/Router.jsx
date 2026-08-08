@@ -5,6 +5,8 @@
 */
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { flushSync } from "react-dom";
+import { iniciarTransicionVista } from "../lib/transiciones.js";
 
 /** - `contexto del enrutador propio basado en la History API` */
 const RouterContext = createContext(null);
@@ -24,7 +26,11 @@ export const ProveedorRouter = ({ children }) => {
     useEffect(() => {
         //  -----  sincronizar la ruta con los botones atrás / adelante  -----
         const alCambiarHistorial = () => {
-            setRuta(window.location.pathname);
+            iniciarTransicionVista(() => {
+                flushSync(() => {
+                    setRuta(window.location.pathname);
+                });
+            });
         };
 
         window.addEventListener("popstate", alCambiarHistorial);
@@ -45,9 +51,14 @@ export const ProveedorRouter = ({ children }) => {
             return;
         }
 
-        window.history.pushState({}, "", destino);
-        setRuta(destino);
-        window.scrollTo(0, 0);
+        //  -----  el cambio de ruta va dentro de la view transition  -----
+        iniciarTransicionVista(() => {
+            window.history.pushState({}, "", destino);
+            flushSync(() => {
+                setRuta(destino);
+            });
+            window.scrollTo(0, 0);
+        });
     };
 
     return (

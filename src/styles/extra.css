@@ -358,3 +358,89 @@
 .page-home__main {
     min-height: 50vh;
 }
+
+.article__cover--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 30% 30%, var(--color-primary-soft-10), transparent 60%),
+        var(--color-surface-container-low);
+    color: var(--color-primary-container);
+}
+
+/* ==========================================================================
+   View Transitions (navegación, imágenes y títulos)
+   ========================================================================== */
+
+/* Cabecera y barra lateral se mantienen estables entre páginas */
+.top-nav {
+    view-transition-name: cabecera;
+}
+
+.side-nav--desktop {
+    view-transition-name: barra-lateral;
+}
+
+.admin-topbar {
+    view-transition-name: admin-topbar;
+}
+
+/* Transición general de página */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.32s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(root) {
+    animation-name: vt-fade-out;
+}
+
+::view-transition-new(root) {
+    animation-name: vt-fade-in;
+}
+
+/* Morph de imágenes y títulos compartidos */
+::view-transition-group(*) {
+    animation-duration: 0.4s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+::view-transition-old(cabecera),
+::view-transition-new(cabecera),
+::view-transition-old(barra-lateral),
+::view-transition-new(barra-lateral),
+::view-transition-old(admin-topbar),
+::view-transition-new(admin-topbar) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+@keyframes vt-fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes vt-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
