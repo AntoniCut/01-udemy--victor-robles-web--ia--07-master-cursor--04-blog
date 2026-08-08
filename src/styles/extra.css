@@ -1,0 +1,360 @@
+/*
+    *  --------------------------------------------------  *
+    *  -----  extra.css  --  /src/styles/extra.css  -----  *
+    *  --------------------------------------------------  *
+*/
+
+/* ==========================================================================
+   Bloques nuevos de la aplicación (BEM) sobre el sistema Neon-Slate
+   ========================================================================== */
+
+/* --- Alerta (mensajes de formularios) --- */
+
+.alerta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    border: 0.1rem solid transparent;
+}
+
+.alerta--error {
+    background-color: rgba(147, 0, 10, 0.2);
+    border-color: var(--color-error-container);
+    color: var(--color-error);
+}
+
+.alerta--exito {
+    background-color: var(--color-primary-soft-10);
+    border-color: var(--color-primary-container);
+    color: var(--color-primary-container);
+}
+
+.alerta__icono {
+    flex-shrink: 0;
+}
+
+/* --- Toast (avisos temporales) --- */
+
+.toast-lista {
+    position: fixed;
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: calc(100% - var(--space-xl));
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-container-highest);
+    border: 0.1rem solid var(--color-border-muted);
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.4);
+    animation: toast-entrada var(--transition-medium) both;
+}
+
+.toast--exito {
+    border-color: var(--color-primary-container);
+}
+
+.toast--exito .toast__icono {
+    color: var(--color-primary-container);
+}
+
+.toast--error {
+    border-color: var(--color-error-container);
+}
+
+.toast--error .toast__icono {
+    color: var(--color-error);
+}
+
+.toast__mensaje {
+    color: var(--color-on-surface);
+}
+
+@keyframes toast-entrada {
+    from {
+        opacity: 0;
+        transform: translateY(1.6rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Modal de confirmación --- */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+}
+
+.modal__fondo {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(1, 15, 31, 0.8);
+    backdrop-filter: blur(0.4rem);
+}
+
+.modal__cuadro {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 48rem;
+    padding: var(--space-xl) var(--space-lg);
+    box-shadow: 0 2.5rem 5rem -1.2rem rgba(0, 0, 0, 0.5);
+}
+
+.modal__titulo {
+    color: var(--color-primary);
+    margin-bottom: var(--space-md);
+}
+
+.modal__texto {
+    color: var(--color-on-surface-variant);
+    margin-bottom: var(--space-lg);
+    overflow-wrap: anywhere;
+}
+
+.modal__acciones {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+/* --- Botón de peligro --- */
+
+.button--danger {
+    background-color: var(--color-error-container);
+    color: var(--color-on-error-container);
+    font-weight: 700;
+}
+
+.button--danger:hover {
+    box-shadow: 0 0 1.5rem rgba(147, 0, 10, 0.6);
+    transform: translateY(-0.2rem);
+}
+
+/* --- Cargador (spinner) --- */
+
+.cargador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl);
+    width: 100%;
+    min-height: 24rem;
+}
+
+.cargador__circulo {
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: var(--radius-full);
+    border: 0.4rem solid var(--color-surface-container-highest);
+    border-top-color: var(--color-primary-container);
+    animation: cargador-giro 0.8s linear infinite;
+}
+
+@keyframes cargador-giro {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Estado vacío / error --- */
+
+.estado-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+}
+
+.estado-vacio__icono {
+    color: var(--color-primary-container);
+}
+
+.estado-vacio__titulo {
+    color: var(--color-primary);
+}
+
+.estado-vacio__texto {
+    color: var(--color-on-surface-variant);
+    max-width: 48rem;
+}
+
+/* --- Tabla del panel sin columna de categoría --- */
+
+.data-table--blog .data-table__head,
+.data-table--blog .data-table__row {
+    grid-template-columns:
+        minmax(0, 2.4fr)
+        minmax(0, 1fr)
+        minmax(0, 1.2fr)
+        auto;
+}
+
+/* --- Barra superior del panel en móvil --- */
+
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+    padding: var(--space-md);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--z-sticky);
+    background-color: var(--color-surface-container);
+    border-bottom: 0.1rem solid var(--color-surface-container-high);
+}
+
+.admin-topbar__brand {
+    font-size: var(--font-headline-sm-size);
+    font-weight: 700;
+    color: var(--color-primary);
+    letter-spacing: -0.025em;
+}
+
+.admin-topbar__acciones {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+@media (min-width: 768px) {
+    .admin-topbar {
+        display: none;
+    }
+}
+
+/* En móvil el contenido del panel deja hueco a la barra superior */
+@media (max-width: 767px) {
+    .page-dashboard__main,
+    .page-editor__main {
+        padding-top: 8rem;
+    }
+
+    .page-editor__header {
+        top: 6.4rem;
+    }
+}
+
+/* --- Avatar con la inicial del usuario --- */
+
+.side-nav__avatar--letra {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-soft);
+    color: var(--color-primary-container);
+    font-size: var(--font-label-md-size);
+    font-weight: 700;
+    border-color: var(--color-primary-container);
+}
+
+/* --- Área de contenido del editor (textarea) --- */
+
+.rich-editor__area {
+    flex: 1;
+    width: 100%;
+    min-height: 40rem;
+    padding: var(--space-lg);
+    border: none;
+    outline: none;
+    resize: vertical;
+    background-color: var(--color-surface-container-low);
+    color: var(--color-on-surface);
+    line-height: 1.7;
+}
+
+.rich-editor__area::placeholder {
+    color: var(--color-on-surface-variant);
+}
+
+/* --- Campos extra del panel lateral del editor --- */
+
+.editor-panel__extracto {
+    min-height: 10rem;
+    resize: vertical;
+}
+
+.editor-panel__vista-previa {
+    width: 100%;
+    border-radius: var(--radius-md);
+    border: 0.1rem solid var(--color-border-muted);
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+}
+
+/* --- Elementos ocultos visualmente pero accesibles --- */
+
+.visualmente-oculto {
+    position: absolute;
+    width: 0.1rem;
+    height: 0.1rem;
+    padding: 0;
+    margin: -0.1rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --- Placeholders de imagen --- */
+
+.article-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 30% 30%, var(--color-primary-soft-10), transparent 60%),
+        var(--color-surface-container-low);
+    color: var(--color-primary-container);
+}
+
+.hero__media--placeholder {
+    background:
+        radial-gradient(circle at 70% 20%, var(--color-primary-soft), transparent 55%),
+        linear-gradient(135deg, var(--color-surface-container-high), var(--color-surface-container-lowest));
+}
+
+.related__thumb--placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-surface-container-low);
+    color: var(--color-primary-container);
+}
+
+/* --- El pie público empuja hasta abajo en páginas cortas --- */
+
+.page-article__main,
+.page-home__main {
+    min-height: 50vh;
+}

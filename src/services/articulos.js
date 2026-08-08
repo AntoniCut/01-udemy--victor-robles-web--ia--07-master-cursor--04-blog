@@ -1,0 +1,208 @@
+/*
+    *  ----------------------------------------------------------  *
+    *  -----  articulos.js  --  /src/services/articulos.js  -----  *
+    *  ----------------------------------------------------------  *
+*/
+
+/// <reference path="../../types/types.d.js" />
+
+import { supabase } from "../lib/supabase.js";
+
+/** - `número de artículos por página en el listado público` */
+export const ARTICULOS_POR_PAGINA = 6;
+
+/**
+ * ------------------------------------------
+ * -----  `obtenerPublicados(pagina)`  -----
+ * ------------------------------------------
+ * - Obtiene una página de artículos publicados, ordenados del más reciente al más antiguo.
+ * @param {number} pagina - Número de página (empieza en 1).
+ * @return {Promise<{ articulos: Articulo[], total: number, error: boolean }>} - Artículos, total y estado de error.
+ */
+export const obtenerPublicados = async (pagina) => {
+    /** - `índice del primer artículo de la página` */
+    const desde = (pagina - 1) * ARTICULOS_POR_PAGINA;
+
+    /** - `índice del último artículo de la página` */
+    const hasta = desde + ARTICULOS_POR_PAGINA - 1;
+
+    const { data, count, error } = await supabase
+        .from("articles")
+        .select("*", { count: "exact" })
+        .eq("published", true)
+        .order("created_at", { ascending: false })
+        .range(desde, hasta);
+
+    return { articulos: data ?? [], total: count ?? 0, error: Boolean(error) };
+};
+
+/**
+ * -------------------------------------
+ * -----  `obtenerPorSlug(slug)`  -----
+ * -------------------------------------
+ * - Obtiene un artículo publicado a partir de su slug.
+ * @param {string} slug - Slug del artículo.
+ * @return {Promise<Articulo|null>} - Artículo encontrado o null.
+ */
+export const obtenerPorSlug = async (slug) => {
+    const { data } = await supabase
+        .from("articles")
+        .select("*")
+        .eq("slug", slug)
+        .maybeSingle();
+
+    return data;
+};
+
+/**
+ * ------------------------------------------------
+ * -----  `obtenerRelacionados(slugActual)`  -----
+ * ------------------------------------------------
+ * - Obtiene los últimos artículos publicados distintos del actual.
+ * @param {string} slugActual - Slug del artículo que se está leyendo.
+ * @return {Promise<Articulo[]>} - Lista de artículos relacionados.
+ */
+export const obtenerRelacionados = async (slugActual) => {
+    const { data } = await supabase
+        .from("articles")
+        .select("*")
+        .eq("published", true)
+        .neq("slug", slugActual)
+        .order("created_at", { ascending: false })
+        .limit(3);
+
+    return data ?? [];
+};
+
+/**
+ * ---------------------------------
+ * -----  `obtenerPorId(id)`  -----
+ * ---------------------------------
+ * - Obtiene un artículo por su identificador (para el editor).
+ * @param {string} id - Identificador del artículo.
+ * @return {Promise<Articulo|null>} - Artículo encontrado o null.
+ */
+export const obtenerPorId = async (id) => {
+    const { data } = await supabase
+        .from("articles")
+        .select("*")
+        .eq("id", id)
+        .maybeSingle();
+
+    return data;
+};
+
+/**
+ * -------------------------------------------
+ * -----  `obtenerDelAutor(autorId)`  -----
+ * -------------------------------------------
+ * - Obtiene todos los artículos de un autor para el panel de administración.
+ * @param {string} autorId - Identificador del autor.
+ * @return {Promise<{ articulos: Articulo[], error: boolean }>} - Artículos del autor y estado de error.
+ */
+export const obtenerDelAutor = async (autorId) => {
+    const { data, error } = await supabase
+        .from("articles")
+        .select("*")
+        .eq("author_id", autorId)
+        .order("created_at", { ascending: false });
+
+    return { articulos: data ?? [], error: Boolean(error) };
+};
+
+/**
+ * ----------------------------------
+ * -----  `generarSlug(titulo)`  -----
+ * ----------------------------------
+ * - Genera un slug legible para URL a partir de un título.
+ * @param {string} titulo - Título del artículo.
+ * @return {string} - Slug en minúsculas, sin acentos y con guiones.
+ */
+export const generarSlug = (titulo) => {
+    return titulo
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+};
+
+/**
+ * ---------------------------------------
+ * -----  `crearArticulo(articulo)`  -----
+ * ---------------------------------------
+ * - Crea un artículo nuevo; si el slug ya existe, añade un sufijo único.
+ * @param {Object} articulo - Datos del artículo a insertar.
+ * @return {Promise<{ articulo: Articulo|null, error: boolean }>} - Artículo creado y estado de error.
+ */
+export const crearArticulo = async (articulo) => {
+    const { data, error } = await supabase
+        .from("articles")
+        .insert(articulo)
+        .select()
+        .single();
+
+    //  -----  si el slug está duplicado, reintentar con un sufijo único  -----
+    if (error && error.code === "23505") {
+        /** - `slug alternativo con sufijo temporal único` */
+        const slugAlternativo = `${articulo.slug}-${Date.now().toString(36)}`;
+
+        const reintento = await supabase
+            .from("articles")
+            .insert({ ...articulo, slug: slugAlternativo })
+            .select()
+            .single();
+
+        return { articulo: reintento.data, error: Boolean(reintento.error) };
+    }
+
+    return { articulo: data, error: Boolean(error) };
+};
+
+/**
+ * -----------------------------------------------
+ * -----  `actualizarArticulo(id, cambios)`  -----
+ * -----------------------------------------------
+ * - Actualiza los datos de un artículo existente.
+ * @param {string} id - Identificador del artículo.
+ * @param {Object} cambios - Campos a modificar.
+ * @return {Promise<{ articulo: Articulo|null, error: boolean }>} - Artículo actualizado y estado de error.
+ */
+export const actualizarArticulo = async (id, cambios) => {
+    const { data, error } = await supabase
+        .from("articles")
+        .update(cambios)
+        .eq("id", id)
+        .select()
+        .single();
+
+    return { articulo: data, error: Boolean(error) };
+};
+
+/**
+ * --------------------------------------
+ * -----  `eliminarArticulo(id)`  -----
+ * --------------------------------------
+ * - Elimina un artículo de forma definitiva.
+ * @param {string} id - Identificador del artículo.
+ * @return {Promise<boolean>} - True si hubo error, false si todo fue bien.
+ */
+export const eliminarArticulo = async (id) => {
+    const { error } = await supabase.from("articles").delete().eq("id", id);
+    return Boolean(error);
+};
+
+/**
+ * ------------------------------------------------
+ * -----  `cambiarPublicado(id, publicado)`  -----
+ * ------------------------------------------------
+ * - Publica o despublica un artículo.
+ * @param {string} id - Identificador del artículo.
+ * @param {boolean} publicado - Nuevo estado de publicación.
+ * @return {Promise<{ articulo: Articulo|null, error: boolean }>} - Artículo actualizado y estado de error.
+ */
+export const cambiarPublicado = async (id, publicado) => {
+    return actualizarArticulo(id, { published: publicado });
+};

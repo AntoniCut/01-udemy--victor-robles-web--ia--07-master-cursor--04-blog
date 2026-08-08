@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "checkJs": true,
+        "noEmit": true,
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "lib": ["ES2022", "DOM", "DOM.Iterable"],
+        "strict": false,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
+        "skipLibCheck": true
+    },
+    "include": [
+        "src/**/*.js",
+        "src/**/*.jsx",
+        "types/**/*.d.js",
+        "types/**/*.d.ts"
+    ],
+    "exclude": ["node_modules"]
+}
