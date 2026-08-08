@@ -21,10 +21,23 @@ export const RutaProtegida = ({ children }) => {
     const { navegar } = useRouter();
 
     useEffect(() => {
-        //  -----  redirigir al login si no hay sesión activa  -----
-        if (!cargando && !usuario) {
-            navegar("/login");
+        //  -----  redirigir al login fuera del ciclo de render (replace + sin animación)  -----
+        if (cargando || usuario) {
+            return;
         }
+
+        /** - `evita redirigir si el efecto se limpia antes del microtask` */
+        let cancelado = false;
+
+        queueMicrotask(() => {
+            if (!cancelado) {
+                navegar("/login", { reemplazar: true, animar: false });
+            }
+        });
+
+        return () => {
+            cancelado = true;
+        };
     }, [cargando, usuario]);
 
     //  -----  mientras se recupera la sesión, mostrar el cargador  -----

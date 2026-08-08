@@ -4,6 +4,9 @@
     *  -----------------------------------------------------------  *
 */
 
+/** @type {ViewTransition|null} - `transición de vista en curso, si existe` */
+let transicionActiva = null;
+
 /**
  * ----------------------------------------------------
  * -----  `nombreTransicionImagen(slug)`  -----
@@ -28,8 +31,8 @@ export const nombreTransicionTitulo = (slug) => `vt-titulo-${slug}`;
  * --------------------------------------------------
  * -----  `iniciarTransicionVista(actualizar)`  -----
  * --------------------------------------------------
- * - Ejecuta un cambio de UI dentro de document.startViewTransition,
- *   con fallback si el navegador no lo soporta o el usuario prefiere menos movimiento.
+ * - Ejecuta un cambio de UI dentro de document.startViewTransition.
+ *   Si ya hay una transición en curso, aplica el cambio sin lanzar otra.
  * @param {() => void} actualizar - Función que aplica el cambio de estado/DOM.
  * @return {void}
  */
@@ -39,13 +42,26 @@ export const iniciarTransicionVista = (actualizar) => {
         "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    //  -----  sin soporte o con menos movimiento: actualizar al instante  -----
-    if (menosMovimiento || typeof document.startViewTransition !== "function") {
+    //  -----  sin soporte, menos movimiento o transición en curso: actualizar al instante  -----
+    if (
+        menosMovimiento ||
+        typeof document.startViewTransition !== "function" ||
+        transicionActiva
+    ) {
         actualizar();
         return;
     }
 
-    //  -----  silenciar abortos por estado inválido (navegación rápida, etc.)  -----
     const transicion = document.startViewTransition(actualizar);
-    transicion.finished.catch(() => {});
+    transicionActiva = transicion;
+
+    //  -----  liberar el candado y silenciar abortos al saltar/cancelar la transición  -----
+    const liberar = () => {
+        if (transicionActiva === transicion) {
+            transicionActiva = null;
+        }
+    };
+
+    transicion.ready.catch(() => {});
+    transicion.finished.then(liberar).catch(liberar);
 };

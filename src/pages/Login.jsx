@@ -38,10 +38,23 @@ export const Login = () => {
     const [enviando, setEnviando] = useState(false);
 
     useEffect(() => {
-        //  -----  si ya hay sesión, redirigir al panel  -----
-        if (!cargando && usuario) {
-            navegar("/admin");
+        //  -----  si ya hay sesión, salir de /login fuera del ciclo de render  -----
+        if (cargando || !usuario) {
+            return;
         }
+
+        /** - `evita redirigir si el efecto se limpia antes del microtask` */
+        let cancelado = false;
+
+        queueMicrotask(() => {
+            if (!cancelado) {
+                navegar("/admin", { reemplazar: true, animar: false });
+            }
+        });
+
+        return () => {
+            cancelado = true;
+        };
     }, [cargando, usuario]);
 
     //  -----  cambio de pestaña: limpiar el mensaje  -----
@@ -62,7 +75,8 @@ export const Login = () => {
             if (error) {
                 setMensaje({ tipo: "error", texto: error });
             } else {
-                navegar("/admin");
+                //  -----  reemplazar /login para que "atrás" no vuelva al formulario  -----
+                navegar("/admin", { reemplazar: true });
             }
         }
         //  -----  registrar un usuario nuevo  -----
@@ -85,7 +99,7 @@ export const Login = () => {
                     texto: "Cuenta creada. Revisa tu correo para confirmarla antes de iniciar sesión.",
                 });
             } else {
-                navegar("/admin");
+                navegar("/admin", { reemplazar: true });
             }
         }
 

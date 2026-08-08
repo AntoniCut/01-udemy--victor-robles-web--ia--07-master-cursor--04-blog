@@ -27,6 +27,7 @@ export const ProveedorRouter = ({ children }) => {
         //  -----  sincronizar la ruta con los botones atrás / adelante  -----
         const alCambiarHistorial = () => {
             iniciarTransicionVista(() => {
+                //  -----  flushSync solo dentro de la view transition  -----
                 flushSync(() => {
                     setRuta(window.location.pathname);
                 });
@@ -38,22 +39,48 @@ export const ProveedorRouter = ({ children }) => {
     }, []);
 
     /**
-     * ------------------------------
-     * -----  `navegar(destino)`  -----
-     * ------------------------------
+     * --------------------------------------------------------
+     * -----  `navegar(destino, opciones)`  -----
+     * --------------------------------------------------------
      * - Cambia la ruta actual usando la History API sin recargar la página.
      * @param {string} destino - Ruta de destino, por ejemplo "/admin".
+     * @param {{ reemplazar?: boolean, animar?: boolean }} [opciones] - Opciones de navegación.
      * @return {void}
      */
-    const navegar = (destino) => {
+    const navegar = (destino, opciones = {}) => {
+        const { reemplazar = false, animar = true } = opciones;
+
         //  -----  si ya estamos en la misma ruta, no hacer nada  -----
         if (destino === window.location.pathname) {
             return;
         }
 
-        //  -----  el cambio de ruta va dentro de la view transition  -----
+        /**
+         * ------------------------------------------
+         * -----  `actualizarHistorial()`  -----
+         * ------------------------------------------
+         * - Actualiza la URL en el historial del navegador.
+         * @return {void}
+         */
+        const actualizarHistorial = () => {
+            if (reemplazar) {
+                window.history.replaceState({}, "", destino);
+            } else {
+                window.history.pushState({}, "", destino);
+            }
+        };
+
+        //  -----  sin animación: no usar flushSync (puede llamarse desde useEffect)  -----
+        if (!animar) {
+            actualizarHistorial();
+            setRuta(destino);
+            window.scrollTo(0, 0);
+            return;
+        }
+
+        //  -----  con view transition: flushSync solo dentro del callback de la API  -----
         iniciarTransicionVista(() => {
-            window.history.pushState({}, "", destino);
+            actualizarHistorial();
             flushSync(() => {
                 setRuta(destino);
             });
@@ -73,7 +100,7 @@ export const ProveedorRouter = ({ children }) => {
  * -----  `useRouter()`  -----
  * --------------------------
  * - Hook para acceder a la ruta actual y a la función de navegación.
- * @return {{ ruta: string, navegar: (destino: string) => void }} - Estado del enrutador.
+ * @return {{ ruta: string, navegar: (destino: string, opciones?: { reemplazar?: boolean, animar?: boolean }) => void }} - Estado del enrutador.
  */
 export const useRouter = () => useContext(RouterContext);
 
