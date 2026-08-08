@@ -444,3 +444,66 @@
         animation: none !important;
     }
 }
+
+/* --- Buscador (cabecera pública) --- */
+
+.top-nav {
+    flex-wrap: wrap;
+}
+
+.top-nav__search {
+    display: flex;
+    order: 3;
+    flex-basis: 100%;
+    min-width: 0;
+}
+
+@media (min-width: 1024px) {
+    .top-nav__search {
+        display: flex;
+        order: 0;
+        flex-basis: auto;
+    }
+}
+
+.top-nav__search-input {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media (min-width: 1024px) {
+    .top-nav__search-input {
+        flex: 0 0 auto;
+    }
+}
+
+.top-nav__search-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: var(--space-xs);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-on-surface-variant);
+    transition: color var(--transition-fast);
+}
+
+.top-nav__search-submit:hover {
+    color: var(--color-primary);
+}
+
+/* --- Resultados de búsqueda --- */
+
+.search-results__count {
+    color: var(--color-on-surface-variant);
+    margin-bottom: var(--space-lg);
+}
+
+/* --- Buscador del panel de administración --- */
+
+.page-dashboard__buscar {
+    max-width: 40rem;
+    margin-bottom: var(--space-lg);
+}

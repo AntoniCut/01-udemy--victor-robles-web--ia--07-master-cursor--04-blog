@@ -20,8 +20,10 @@ const RouterContext = createContext(null);
  * @return {import("react").JSX.Element} - Proveedor del contexto del enrutador.
  */
 export const ProveedorRouter = ({ children }) => {
-    /** - `ruta actual del navegador` */
-    const [ruta, setRuta] = useState(window.location.pathname);
+    /** - `ruta actual del navegador (camino y parámetros de consulta)` */
+    const [ruta, setRuta] = useState(
+        window.location.pathname + window.location.search
+    );
 
     useEffect(() => {
         //  -----  sincronizar la ruta con los botones atrás / adelante  -----
@@ -29,7 +31,9 @@ export const ProveedorRouter = ({ children }) => {
             iniciarTransicionVista(() => {
                 //  -----  flushSync solo dentro de la view transition  -----
                 flushSync(() => {
-                    setRuta(window.location.pathname);
+                    setRuta(
+                        window.location.pathname + window.location.search
+                    );
                 });
             });
         };
@@ -43,6 +47,7 @@ export const ProveedorRouter = ({ children }) => {
      * -----  `navegar(destino, opciones)`  -----
      * --------------------------------------------------------
      * - Cambia la ruta actual usando la History API sin recargar la página.
+     *   El destino puede incluir parámetros de consulta (ej. "/buscar?q=zelda").
      * @param {string} destino - Ruta de destino, por ejemplo "/admin".
      * @param {{ reemplazar?: boolean, animar?: boolean }} [opciones] - Opciones de navegación.
      * @return {void}
@@ -51,7 +56,7 @@ export const ProveedorRouter = ({ children }) => {
         const { reemplazar = false, animar = true } = opciones;
 
         //  -----  si ya estamos en la misma ruta, no hacer nada  -----
-        if (destino === window.location.pathname) {
+        if (destino === window.location.pathname + window.location.search) {
             return;
         }
 
@@ -99,7 +104,8 @@ export const ProveedorRouter = ({ children }) => {
  * --------------------------
  * -----  `useRouter()`  -----
  * --------------------------
- * - Hook para acceder a la ruta actual y a la función de navegación.
+ * - Hook para acceder a la ruta actual (con sus parámetros de consulta)
+ *   y a la función de navegación.
  * @return {{ ruta: string, navegar: (destino: string, opciones?: { reemplazar?: boolean, animar?: boolean }) => void }} - Estado del enrutador.
  */
 export const useRouter = () => useContext(RouterContext);

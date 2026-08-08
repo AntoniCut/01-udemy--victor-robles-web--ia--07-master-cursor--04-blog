@@ -102,6 +102,57 @@ export const obtenerPublicados = async (pagina) => {
 };
 
 /**
+ * ------------------------------------
+ * -----  `escaparPatron(termino)`  -----
+ * ------------------------------------
+ * - Escapa los comodines del patrón ILIKE ("%" y "_") para buscar el texto literal.
+ * @param {string} termino - Término de búsqueda del usuario.
+ * @return {string} - Término seguro para usar como patrón ILIKE.
+ */
+const escaparPatron = (termino) => {
+    return termino.replace(/[%_]/g, "\\$&");
+};
+
+/**
+ * ----------------------------------------------
+ * -----  `buscarArticulos(termino, pagina)`  -----
+ * ----------------------------------------------
+ * - Busca artículos publicados cuyo título o extracto contenga el término,
+ *   ordenados del más reciente al más antiguo y paginados.
+ * @param {string} termino - Término de búsqueda (se busca en título y extracto).
+ * @param {number} pagina - Número de página (empieza en 1).
+ * @return {Promise<{ articulos: Articulo[], total: number, error: boolean }>} - Artículos, total y estado de error.
+ */
+export const buscarArticulos = async (termino, pagina) => {
+    /** - `término limpio y seguro para el patrón ILIKE` */
+    const patron = `%${escaparPatron(termino.trim())}%`;
+
+    /** - `índice del primer artículo de la página` */
+    const desde = (pagina - 1) * ARTICULOS_POR_PAGINA;
+
+    /** - `índice del último artículo de la página` */
+    const hasta = desde + ARTICULOS_POR_PAGINA - 1;
+
+    const { data, count, error } = await supabase
+        .from("articles")
+        .select("*", { count: "exact" })
+        .eq("published", true)
+        .or(`title.ilike.${patron},excerpt.ilike.${patron}`)
+        .order("created_at", { ascending: false })
+        .range(desde, hasta);
+
+    /** @type {Articulo[]} - `artículos encontrados en la consulta` */
+    const articulos = data ?? [];
+
+    //  -----  guardar en caché por slug si la consulta fue correcta  -----
+    if (!error) {
+        guardarEnCacheSlug(articulos);
+    }
+
+    return { articulos, total: count ?? 0, error: Boolean(error) };
+};
+
+/**
  * -------------------------------------
  * -----  `obtenerPorSlug(slug)`  -----
  * -------------------------------------

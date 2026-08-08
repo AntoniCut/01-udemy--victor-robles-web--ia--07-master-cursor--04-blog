@@ -6,6 +6,7 @@
 
 import { useAuth } from "../context/AuthContext.jsx";
 import { Enlace } from "../router/Router.jsx";
+import { Buscador } from "./Buscador.jsx";
 
 /**
  * -------------------------
@@ -36,6 +37,7 @@ export const Cabecera = () => {
                     </ul>
                 </nav>
             </div>
+            <Buscador />
             <div className="top-nav__actions">
                 {usuario ? (
                     <Enlace

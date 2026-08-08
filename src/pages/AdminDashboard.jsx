@@ -19,6 +19,21 @@ import {
 } from "../services/articulos.js";
 
 /**
+ * --------------------------------
+ * -----  `normalizar(texto)`  -----
+ * --------------------------------
+ * - Normaliza un texto a minúsculas y sin acentos para comparar búsquedas.
+ * @param {string} texto - Texto a normalizar.
+ * @return {string} - Texto en minúsculas y sin tildes.
+ */
+const normalizar = (texto) => {
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+};
+
+/**
  * -------------------------------
  * -----  `AdminDashboard()`  -----
  * -------------------------------
@@ -31,6 +46,9 @@ export const AdminDashboard = () => {
 
     /** @type {[Articulo[], Function]} - `artículos del autor` */
     const [articulos, setArticulos] = useState([]);
+
+    /** - `término de búsqueda del panel` */
+    const [terminoBusqueda, setTerminoBusqueda] = useState("");
 
     /** - `indica si la tabla se está cargando` */
     const [cargando, setCargando] = useState(true);
@@ -54,6 +72,20 @@ export const AdminDashboard = () => {
 
         cargarArticulos();
     }, [usuario.id]);
+
+    /** - `término de búsqueda normalizado para comparar` */
+    const terminoNormalizado = normalizar(terminoBusqueda);
+
+    /** @type {Articulo[]} - `artículos que coinciden con la búsqueda en título o extracto` */
+    const articulosFiltrados = terminoNormalizado
+        ? articulos.filter(
+              (articulo) =>
+                  normalizar(articulo.title).includes(terminoNormalizado) ||
+                  normalizar(articulo.excerpt ?? "").includes(
+                      terminoNormalizado
+                  )
+          )
+        : articulos;
 
     //  -----  click en publicar / despublicar un artículo  -----
     const alCambiarPublicado = async (evento, articulo) => {
@@ -124,6 +156,26 @@ export const AdminDashboard = () => {
                             Nuevo Artículo
                         </Enlace>
                     </header>
+                    <div className="page-dashboard__buscar">
+                        <div className="input__control">
+                            <input
+                                className="input__field input__field--low input__field--icon"
+                                type="text"
+                                placeholder="Buscar artículos..."
+                                aria-label="Buscar artículos del panel"
+                                value={terminoBusqueda}
+                                onChange={(evento) =>
+                                    setTerminoBusqueda(evento.target.value)
+                                }
+                            />
+                            <span
+                                className="material-symbols-outlined input__icon"
+                                aria-hidden="true"
+                            >
+                                search
+                            </span>
+                        </div>
+                    </div>
                     <div className="card data-table data-table--blog">
                         {cargando && (
                             <div className="cargador" role="status" aria-label="Cargando artículos">
@@ -143,7 +195,32 @@ export const AdminDashboard = () => {
                                 </p>
                             </section>
                         )}
-                        {!cargando && articulos.length > 0 && (
+                        {!cargando &&
+                            articulos.length > 0 &&
+                            articulosFiltrados.length === 0 && (
+                                <section className="estado-vacio">
+                                    <span className="material-symbols-outlined material-symbols-outlined--xl estado-vacio__icono">
+                                        manage_search
+                                    </span>
+                                    <h2 className="estado-vacio__titulo text-headline-md">
+                                        No se encontraron artículos para “
+                                        {terminoBusqueda}”
+                                    </h2>
+                                    <p className="estado-vacio__texto text-body-md">
+                                        Prueba con otro término o limpia la búsqueda.
+                                    </p>
+                                    <button
+                                        className="button button--secondary button--sm text-label-md"
+                                        type="button"
+                                        onClick={() =>
+                                            setTerminoBusqueda("")
+                                        }
+                                    >
+                                        Limpiar búsqueda
+                                    </button>
+                                </section>
+                            )}
+                        {!cargando && articulosFiltrados.length > 0 && (
                             <div className="data-table__scroll">
                                 <div className="data-table__head text-label-sm">
                                     <div className="data-table__col--title">Título</div>
@@ -152,7 +229,7 @@ export const AdminDashboard = () => {
                                     <div className="data-table__col--actions">Acciones</div>
                                 </div>
                                 <div className="data-table__body">
-                                    {articulos.map((articulo) => (
+                                    {articulosFiltrados.map((articulo) => (
                                         <div className="data-table__row" key={articulo.id}>
                                             <div className="data-table__col--title">
                                                 <div className="data-table__title text-label-md">
@@ -231,11 +308,13 @@ export const AdminDashboard = () => {
                             </div>
                         )}
                     </div>
-                    {!cargando && articulos.length > 0 && (
+                    {!cargando && articulosFiltrados.length > 0 && (
                         <div className="page-dashboard__footer text-label-sm">
                             <span>
-                                Mostrando {articulos.length}{" "}
-                                {articulos.length === 1 ? "artículo" : "artículos"}
+                                Mostrando {articulosFiltrados.length}{" "}
+                                {articulosFiltrados.length === 1
+                                    ? "artículo"
+                                    : "artículos"}
                             </span>
                         </div>
                     )}

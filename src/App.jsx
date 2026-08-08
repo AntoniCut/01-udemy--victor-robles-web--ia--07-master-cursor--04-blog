@@ -9,6 +9,7 @@ import { LayoutPublico } from "./components/LayoutPublico.jsx";
 import { RutaProtegida } from "./components/RutaProtegida.jsx";
 import { AdminDashboard } from "./pages/AdminDashboard.jsx";
 import { AdminEditor } from "./pages/AdminEditor.jsx";
+import { Buscar } from "./pages/Buscar.jsx";
 import { DetalleArticulo } from "./pages/DetalleArticulo.jsx";
 import { Home } from "./pages/Home.jsx";
 import { Login } from "./pages/Login.jsx";
@@ -79,13 +80,19 @@ const contenidoAdmin = (ruta) => {
 export const App = () => {
     const { ruta } = useRouter();
 
+    /** - `camino de la ruta sin los parámetros de consulta` */
+    const camino = ruta.split("?")[0];
+
+    /** @type {URLSearchParams} - `parámetros de consulta de la ruta` */
+    const parametros = new URLSearchParams(ruta.split("?")[1] ?? "");
+
     //  -----  login a pantalla completa (sin layout público)  -----
-    if (ruta === "/login") {
+    if (camino === "/login") {
         return <Login />;
     }
 
     //  -----  panel de administración con barra lateral estable  -----
-    const admin = contenidoAdmin(ruta);
+    const admin = contenidoAdmin(camino);
     if (admin) {
         return (
             <RutaProtegida>
@@ -98,18 +105,23 @@ export const App = () => {
 
     //  -----  parte pública: un solo layout para no desmontar cabecera/pie  -----
     /** - `variante visual del layout público` */
-    const variantePublica = ruta.startsWith("/articulo/") ? "article" : "home";
+    const variantePublica = camino.startsWith("/articulo/") ? "article" : "home";
 
     /** - `contenido de la zona principal pública` */
     let contenidoPublico = <NoEncontrada />;
 
-    if (ruta === "/") {
+    if (camino === "/") {
         contenidoPublico = <Home />;
-    } else if (ruta.startsWith("/articulo/")) {
+    } else if (camino.startsWith("/articulo/")) {
         /** - `slug del artículo extraído de la ruta` */
-        const slug = ruta.replace("/articulo/", "");
+        const slug = camino.replace("/articulo/", "");
         //  -----  key=slug reinicia el estado y evita view-transition-name duplicados  -----
         contenidoPublico = <DetalleArticulo key={slug} slug={slug} />;
+    } else if (camino === "/buscar") {
+        //  -----  término de búsqueda desde el parámetro "q"  -----
+        const query = parametros.get("q") ?? "";
+        //  -----  key=query reinicia la paginación al cambiar el término  -----
+        contenidoPublico = <Buscar key={query} query={query} />;
     }
 
     return (
