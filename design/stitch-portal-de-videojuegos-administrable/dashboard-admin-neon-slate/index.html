@@ -1,0 +1,331 @@
+<!--
+    *  -------------------------------------------------------------------------------------------------------------------------------  *
+    *  -----  code.html  --  /design/stitch_portal_de_videojuegos_administrable/gamerpulse_dashboard_admin_neon_slate/code.html  -----  *
+    *  -------------------------------------------------------------------------------------------------------------------------------  *
+-->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GamerPulse - Dashboard Admin</title>
+    <link rel="shortcut icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="../assets/css/gamerpulse.css" rel="stylesheet" />
+  </head>
+  <body class="page-dashboard">
+    <nav
+      class="side-nav side-nav--desktop"
+      aria-label="Navegación de administración"
+    >
+      <div class="side-nav__identity">
+        <img
+          class="side-nav__avatar"
+          data-alt="A futuristic, glowing avatar image of a system administrator in a dark, tech-noir environment. The avatar features a stylized, neon-lit helmet with subtle green accents, reflecting the high-performance gaming aesthetic of GamerPulse. Deep shadows and a sleek, slate-colored background complete the premium corporate modern look."
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHZ4wBn_xZFQXJ7YEU8VicRqF4DQoQbauYoEqbrfkN3RV9-5tuM_8qNMUqhAMzRNqDYOIxohYE2YYeXdqnMMT_kRTZP-BEiqYfc2u-oiHPPhdrNxUQYzJ57Zhvz92Mb9kd9lCof1iM-xeox7dMHO-EAj23h8Y28PqzRDpq9uWHn78aorD5Cls1tAExuItW4IjdiNx6_QM30byrUVeaLZbrYZUDcCpj4mMexTFlo_XpLCH0APkwdsQG"
+          alt="Avatar administrador"
+        />
+        <div>
+          <div class="side-nav__title">GP Admin</div>
+          <div class="side-nav__subtitle">System Manager</div>
+        </div>
+      </div>
+      <button
+        class="button button--primary side-nav__cta text-label-md"
+        type="button"
+      >
+        <span
+          class="material-symbols-outlined material-symbols-outlined--filled"
+          >add</span
+        >
+        New Post
+      </button>
+      <div class="side-nav__nav">
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">dashboard</span>
+          Dashboard
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">analytics</span>
+          Analytics
+        </a>
+        <a class="side-nav__link side-nav__link--active" href="#">
+          <span
+            class="material-symbols-outlined material-symbols-outlined--filled"
+            >edit_note</span
+          >
+          Articles
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">group</span>
+          Users
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">settings</span>
+          Settings
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">history</span>
+          Logs
+        </a>
+      </div>
+      <div class="side-nav__footer">
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">help</span>
+          Support
+        </a>
+        <a class="side-nav__link side-nav__link--danger" href="#">
+          <span class="material-symbols-outlined">logout</span>
+          Logout
+        </a>
+      </div>
+    </nav>
+    <main class="page-dashboard__main">
+      <div class="page-dashboard__inner">
+        <header class="page-dashboard__header">
+          <div>
+            <h1 class="page-dashboard__heading text-headline-xl">
+              Gestión de Artículos
+            </h1>
+            <p class="page-dashboard__lead text-body-md">
+              Administra, edita y publica contenido para la plataforma.
+            </p>
+          </div>
+          <button
+            class="button button--primary button--lg text-label-md"
+            type="button"
+          >
+            <span
+              class="material-symbols-outlined material-symbols-outlined--filled"
+              >add_circle</span
+            >
+            Nuevo Artículo
+          </button>
+        </header>
+        <div class="card data-table">
+          <div class="data-table__scroll">
+            <div class="data-table__head text-label-sm">
+              <div class="data-table__col--title">Título</div>
+              <div class="data-table__col--category">Categoría</div>
+              <div class="data-table__col--date">Fecha</div>
+              <div class="data-table__col--status">Estado</div>
+              <div class="data-table__col--actions">Acciones</div>
+            </div>
+            <div class="data-table__body">
+              <div class="data-table__row">
+                <div class="data-table__col--title">
+                  <div class="data-table__title text-label-md">
+                    Nvidia RTX 5090: Todo lo que necesitas saber antes del
+                    lanzamiento
+                  </div>
+                  <div class="data-table__subtitle text-label-sm">
+                    Un análisis profundo de la arquitectura y rendimiento
+                    esperado.
+                  </div>
+                </div>
+                <div
+                  class="data-table__col--category text-body-sm data-table__category"
+                >
+                  Hardware
+                </div>
+                <div
+                  class="data-table__col--date text-body-sm data-table__date"
+                >
+                  24 Oct, 2024
+                </div>
+                <div class="data-table__col--status">
+                  <span class="badge badge--live text-label-sm">
+                    <span class="badge__pulse"></span>
+                    Publicado
+                  </span>
+                </div>
+                <div class="data-table__col--actions data-table__actions">
+                  <button
+                    class="data-table__action"
+                    type="button"
+                    aria-label="Editar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >edit</span
+                    >
+                  </button>
+                  <button
+                    class="data-table__action data-table__action--danger"
+                    type="button"
+                    aria-label="Eliminar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >delete</span
+                    >
+                  </button>
+                </div>
+              </div>
+              <div class="data-table__row">
+                <div class="data-table__col--title">
+                  <div class="data-table__title text-label-md">
+                    Reseña: Cyberpunk 2077 - Phantom Liberty
+                  </div>
+                  <div class="data-table__subtitle text-label-sm">
+                    Cómo la expansión redime completamente la experiencia
+                    original.
+                  </div>
+                </div>
+                <div
+                  class="data-table__col--category text-body-sm data-table__category"
+                >
+                  Reviews
+                </div>
+                <div
+                  class="data-table__col--date text-body-sm data-table__date"
+                >
+                  23 Oct, 2024
+                </div>
+                <div class="data-table__col--status">
+                  <span class="badge badge--live text-label-sm">
+                    <span class="badge__pulse"></span>
+                    Publicado
+                  </span>
+                </div>
+                <div class="data-table__col--actions data-table__actions">
+                  <button
+                    class="data-table__action"
+                    type="button"
+                    aria-label="Editar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >edit</span
+                    >
+                  </button>
+                  <button
+                    class="data-table__action data-table__action--danger"
+                    type="button"
+                    aria-label="Eliminar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >delete</span
+                    >
+                  </button>
+                </div>
+              </div>
+              <div class="data-table__row">
+                <div class="data-table__col--title">
+                  <div class="data-table__title text-label-md">
+                    Guía de optimización para Counter-Strike 2
+                  </div>
+                  <div class="data-table__subtitle text-label-sm">
+                    Ajustes gráficos para alcanzar los máximos FPS posibles en
+                    competitivo.
+                  </div>
+                </div>
+                <div
+                  class="data-table__col--category text-body-sm data-table__category"
+                >
+                  eSports
+                </div>
+                <div
+                  class="data-table__col--date text-body-sm data-table__date"
+                >
+                  --
+                </div>
+                <div class="data-table__col--status">
+                  <span class="badge badge--draft text-label-sm">Borrador</span>
+                </div>
+                <div class="data-table__col--actions data-table__actions">
+                  <button
+                    class="data-table__action"
+                    type="button"
+                    aria-label="Editar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >edit</span
+                    >
+                  </button>
+                  <button
+                    class="data-table__action data-table__action--danger"
+                    type="button"
+                    aria-label="Eliminar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >delete</span
+                    >
+                  </button>
+                </div>
+              </div>
+              <div class="data-table__row">
+                <div class="data-table__col--title">
+                  <div class="data-table__title text-label-md">
+                    Entrevista: El futuro del Unreal Engine 5
+                  </div>
+                  <div class="data-table__subtitle text-label-sm">
+                    Hablamos con los desarrolladores líderes de Epic Games.
+                  </div>
+                </div>
+                <div
+                  class="data-table__col--category text-body-sm data-table__category"
+                >
+                  News
+                </div>
+                <div
+                  class="data-table__col--date text-body-sm data-table__date"
+                >
+                  --
+                </div>
+                <div class="data-table__col--status">
+                  <span class="badge badge--draft text-label-sm">Borrador</span>
+                </div>
+                <div class="data-table__col--actions data-table__actions">
+                  <button
+                    class="data-table__action"
+                    type="button"
+                    aria-label="Editar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >edit</span
+                    >
+                  </button>
+                  <button
+                    class="data-table__action data-table__action--danger"
+                    type="button"
+                    aria-label="Eliminar"
+                  >
+                    <span
+                      class="material-symbols-outlined material-symbols-outlined--lg"
+                      >delete</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-dashboard__footer text-label-sm">
+          <span>Mostrando 4 de 42 artículos</span>
+          <div class="page-dashboard__pager">
+            <button class="page-dashboard__pager-btn" type="button" disabled="">
+              Anterior
+            </button>
+            <button class="page-dashboard__pager-btn" type="button">
+              Siguiente
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

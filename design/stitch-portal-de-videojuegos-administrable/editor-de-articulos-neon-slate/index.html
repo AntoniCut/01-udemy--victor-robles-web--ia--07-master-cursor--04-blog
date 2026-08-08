@@ -1,0 +1,331 @@
+<!--
+    *  -----------------------------------------------------------------------------------------------------------------------------------  *
+    *  -----  code.html  --  /design/stitch_portal_de_videojuegos_administrable/gamerpulse_editor_de_art_culos_neon_slate/code.html  -----  *
+    *  -----------------------------------------------------------------------------------------------------------------------------------  *
+-->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GamerPulse - Editor de Artículos</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon/favicon.svg"
+      type="image/svg+xml"
+    />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="../assets/css/gamerpulse.css" rel="stylesheet" />
+  </head>
+  <body class="page-editor">
+    <aside
+      class="side-nav side-nav--visible"
+      aria-label="Navegación de administración"
+    >
+      <div class="side-nav__identity side-nav__identity--padded">
+        <div class="side-nav__avatar--accent">
+          <img
+            data-alt="A macro photography shot of a sleek, futuristic metallic sphere glowing with internal neon green light, set against a dark textured carbon fiber background. The lighting is cinematic, highlighting the intricate technological details and creating a high-tech, premium gamer aesthetic."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcfdV-eIz8xQCFCmvXNpr2IPOqLS9UzJhZ2Mb8pn1jVzwL_EOTsBuX60oAVfX2SYjtRvZCw5YhxEPBOSUj9VzQLvC3kzawHosuf72kw8RQgoAbya4mX7Bj7SYvZPm8phO8dlQf__rFhuwgiX3hhAPNXT_KtMFsB4HC-6XdazzYd-KG1qLNTe4HmAmXgROYLPiJvP7TmgmY0NqGQLAgkhgXZZVZVsqTDanzvQHGpfGAW7LywfotvOlT"
+            alt="Avatar administrador"
+          />
+        </div>
+        <div>
+          <h2 class="side-nav__title">GP Admin</h2>
+          <p class="side-nav__subtitle">System Manager</p>
+        </div>
+      </div>
+      <button
+        class="button button--primary side-nav__cta text-label-md"
+        type="button"
+      >
+        <span class="material-symbols-outlined">add</span>
+        New Post
+      </button>
+      <nav class="side-nav__nav">
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">dashboard</span>
+          Dashboard
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">analytics</span>
+          Analytics
+        </a>
+        <a class="side-nav__link side-nav__link--active" href="#">
+          <span class="material-symbols-outlined">edit_note</span>
+          Articles
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">group</span>
+          Users
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">settings</span>
+          Settings
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">history</span>
+          Logs
+        </a>
+      </nav>
+      <div class="side-nav__footer">
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">help</span>
+          Support
+        </a>
+        <a class="side-nav__link" href="#">
+          <span class="material-symbols-outlined">logout</span>
+          Logout
+        </a>
+      </div>
+    </aside>
+    <main class="page-editor__main">
+      <div class="page-editor__bg" aria-hidden="true"></div>
+      <header class="page-editor__header">
+        <div>
+          <div class="page-editor__breadcrumb text-label-sm">
+            <span>Articles</span>
+            <span
+              class="material-symbols-outlined material-symbols-outlined--sm"
+              >chevron_right</span
+            >
+            <span class="page-editor__breadcrumb-current">Redactar Nuevo</span>
+          </div>
+          <h1 class="page-editor__heading text-headline-md">
+            Editor de Artículos
+          </h1>
+        </div>
+        <div class="page-editor__actions">
+          <button
+            class="button button--secondary button--md text-label-md"
+            type="button"
+          >
+            Guardar Borrador
+          </button>
+          <button
+            class="button button--primary button--md text-label-md"
+            type="button"
+          >
+            Publicar
+            <span
+              class="material-symbols-outlined material-symbols-outlined--md"
+              >send</span
+            >
+          </button>
+        </div>
+      </header>
+      <div class="page-editor__workspace">
+        <div class="page-editor__content">
+          <div class="card card--panel editor-title">
+            <input
+              class="editor-title__input text-headline-lg"
+              placeholder="Ingresa el título del artículo..."
+              type="text"
+            />
+            <div class="editor-title__underline" aria-hidden="true"></div>
+          </div>
+          <div class="card card--panel rich-editor">
+            <div class="rich-editor__toolbar">
+              <div class="rich-editor__group">
+                <select
+                  class="rich-editor__select"
+                  aria-label="Formato de bloque"
+                >
+                  <option>Párrafo</option>
+                  <option>Título 1</option>
+                  <option>Título 2</option>
+                  <option>Cita</option>
+                </select>
+              </div>
+              <div class="rich-editor__group">
+                <button class="button button--icon" title="Bold" type="button">
+                  <span
+                    class="material-symbols-outlined material-symbols-outlined--filled"
+                    >format_bold</span
+                  >
+                </button>
+                <button
+                  class="button button--icon"
+                  title="Italic"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined">format_italic</span>
+                </button>
+                <button
+                  class="button button--icon"
+                  title="Underline"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined"
+                    >format_underlined</span
+                  >
+                </button>
+                <button
+                  class="button button--icon"
+                  title="Strikethrough"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined"
+                    >format_strikethrough</span
+                  >
+                </button>
+              </div>
+              <div class="rich-editor__group">
+                <button
+                  class="button button--icon"
+                  title="Bullet List"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined"
+                    >format_list_bulleted</span
+                  >
+                </button>
+                <button
+                  class="button button--icon"
+                  title="Numbered List"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined"
+                    >format_list_numbered</span
+                  >
+                </button>
+                <button
+                  class="button button--icon"
+                  title="Blockquote"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined">format_quote</span>
+                </button>
+              </div>
+              <div class="rich-editor__group">
+                <button
+                  class="button button--icon"
+                  title="Insert Link"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined">link</span>
+                </button>
+                <button
+                  class="button button--icon"
+                  title="Insert Image"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined">image</span>
+                </button>
+                <button
+                  class="button button--icon"
+                  title="Insert Code Block"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined">code</span>
+                </button>
+              </div>
+            </div>
+            <div class="rich-editor__canvas" contenteditable="true">
+              <p class="rich-editor__placeholder text-body-md">
+                Comienza a escribir tu artículo aquí...
+              </p>
+            </div>
+          </div>
+        </div>
+        <aside class="page-editor__aside">
+          <div class="card card--panel editor-panel">
+            <h3 class="editor-panel__heading text-label-md">
+              <span
+                class="material-symbols-outlined material-symbols-outlined--md"
+                >info</span
+              >
+              Estado del Documento
+            </h3>
+            <div class="editor-panel__row">
+              <span class="text-label-sm editor-panel__meta-label"
+                >Visibilidad</span
+              >
+              <span class="badge badge--status">
+                <span class="badge__pulse badge__pulse--error"></span>
+                Privado
+              </span>
+            </div>
+            <div class="editor-panel__meta">
+              <span class="editor-panel__meta-label text-label-sm"
+                >Última modificación</span
+              >
+              <span class="editor-panel__meta-value text-body-md"
+                >Hace 2 minutos</span
+              >
+            </div>
+          </div>
+          <div class="card card--panel editor-panel">
+            <h3 class="editor-panel__heading text-label-md">
+              <span
+                class="material-symbols-outlined material-symbols-outlined--md"
+                >label</span
+              >
+              Metadatos
+            </h3>
+            <div class="editor-panel__fields">
+              <div class="input">
+                <label class="input__label text-label-sm"
+                  >Categoría Principal</label
+                >
+                <select
+                  class="input__field input__field--low text-body-md"
+                  aria-label="Categoría Principal"
+                >
+                  <option disabled="" selected="" value="">
+                    Selecciona una categoría
+                  </option>
+                  <option value="hardware">Hardware &amp; Periféricos</option>
+                  <option value="esports">eSports Competitivo</option>
+                  <option value="reviews">Reviews de Juegos</option>
+                  <option value="news">Noticias de la Industria</option>
+                </select>
+              </div>
+              <div class="input">
+                <label class="input__label text-label-sm"
+                  >Etiquetas (Separadas por coma)</label
+                >
+                <input
+                  class="input__field input__field--low text-body-md"
+                  placeholder="ej. rtx 4090, nvidia, benchmark"
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="card card--panel editor-panel">
+            <h3 class="editor-panel__heading text-label-md">
+              <span
+                class="material-symbols-outlined material-symbols-outlined--md"
+                >image</span
+              >
+              Imagen de Portada
+            </h3>
+            <div class="dropzone">
+              <div class="dropzone__content">
+                <span
+                  class="material-symbols-outlined material-symbols-outlined--xl"
+                  >cloud_upload</span
+                >
+                <span class="text-label-sm"
+                  >Arrastra una imagen o haz clic para subir<br />(Recomendado:
+                  1920x1080)</span
+                >
+              </div>
+              <input accept="image/*" class="dropzone__file" type="file" />
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

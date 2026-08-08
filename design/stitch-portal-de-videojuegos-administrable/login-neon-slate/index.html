@@ -1,0 +1,118 @@
+<!--
+    *  ---------------------------------------------------------------------------------------------------------------------  *
+    *  -----  code.html  --  /design/stitch_portal_de_videojuegos_administrable/gamerpulse_login_neon_slate/code.html  -----  *
+    *  ---------------------------------------------------------------------------------------------------------------------  *
+-->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GamerPulse - Login</title>
+    <link rel="shortcut icon" href="../assets/favicon/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="../assets/css/gamerpulse.css" rel="stylesheet" />
+  </head>
+  <body class="page-login">
+    <div class="page-login__glow-bar" aria-hidden="true"></div>
+    <main class="login">
+      <div class="login__brand">
+        <h1 class="login__title text-headline-xl">GamerPulse</h1>
+        <p class="login__subtitle text-label-md">System Access Portal</p>
+      </div>
+      <div class="card login__card">
+        <div class="login__tabs">
+          <button
+            class="login__tab login__tab--active text-label-md"
+            type="button"
+          >
+            Iniciar Sesión
+            <span class="login__tab-glow" aria-hidden="true"></span>
+          </button>
+          <button class="login__tab text-label-md" type="button">
+            Registrarse
+          </button>
+        </div>
+        <form action="#" class="login__form" method="POST">
+          <div class="input">
+            <label class="input__label text-label-sm" for="email"
+              >Correo Electrónico</label
+            >
+            <div class="input__control">
+              <span
+                class="material-symbols-outlined material-symbols-outlined--filled input__icon"
+                >mail</span
+              >
+              <input
+                class="input__field input__field--icon text-body-md"
+                id="email"
+                name="email"
+                placeholder="admin@gamerpulse.com"
+                required=""
+                type="email"
+              />
+            </div>
+          </div>
+          <div class="input">
+            <div class="login__label-row">
+              <label class="input__label text-label-sm" for="password"
+                >Contraseña</label
+              >
+              <a class="login__forgot text-label-sm" href="#"
+                >¿Olvidaste tu contraseña?</a
+              >
+            </div>
+            <div class="input__control">
+              <span
+                class="material-symbols-outlined material-symbols-outlined--filled input__icon"
+                >lock</span
+              >
+              <input
+                class="input__field input__field--icon text-body-md"
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                required=""
+                type="password"
+              />
+            </div>
+          </div>
+          <div class="login__submit-wrap">
+            <button
+              class="button button--primary button--block button--lg text-label-md"
+              type="submit"
+            >
+              <span class="material-symbols-outlined">login</span>
+              Autenticar
+            </button>
+          </div>
+        </form>
+        <div class="login__divider">
+          <div class="login__divider-line" aria-hidden="true"></div>
+          <div class="login__divider-text">
+            <span class="text-label-sm">O continuar con</span>
+          </div>
+        </div>
+        <div class="login__social">
+          <button
+            class="button button--secondary button--block button--lg text-label-md"
+            type="button"
+          >
+            <span class="material-symbols-outlined">sports_esports</span>
+            Conectar vía Steam
+          </button>
+        </div>
+        <div class="login__orb" aria-hidden="true"></div>
+      </div>
+    </main>
+  </body>
+</html>

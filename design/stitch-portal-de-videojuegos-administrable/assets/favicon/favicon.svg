@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="controllerShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#E9E7FF" stop-opacity="0.95"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fondo -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- Brillo sutil superior -->
+  <ellipse cx="256" cy="120" rx="220" ry="90" fill="#FFFFFF" opacity="0.08"/>
+
+  <!-- Cuerpo del mando -->
+  <path d="
+    M 146 236
+    Q 146 188 196 182
+    L 316 182
+    Q 366 188 366 236
+    L 372 320
+    Q 376 366 336 372
+    Q 306 376 288 344
+    L 278 326
+    Q 268 310 256 310
+    Q 244 310 234 326
+    L 224 344
+    Q 206 376 176 372
+    Q 136 366 140 320
+    Z"
+    fill="url(#controllerShine)"/>
+
+  <!-- Cruceta (D-pad) -->
+  <rect x="184" y="230" width="20" height="60" rx="5" fill="#4F46E5"/>
+  <rect x="164" y="250" width="60" height="20" rx="5" fill="#4F46E5"/>
+
+  <!-- Botones -->
+  <circle cx="320" cy="238" r="12" fill="#7C3AED"/>
+  <circle cx="348" cy="266" r="12" fill="#7C3AED"/>
+  <circle cx="292" cy="266" r="12" fill="#4F46E5"/>
+  <circle cx="320" cy="294" r="12" fill="#4F46E5"/>
+
+  <!-- Pixel accent (identidad "gaming/retro") -->
+  <rect x="238" y="118" width="16" height="16" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="258" y="118" width="16" height="16" fill="#FFFFFF" opacity="0.6"/>
+  <rect x="258" y="98" width="16" height="16" fill="#FFFFFF" opacity="0.9"/>
+</svg>
