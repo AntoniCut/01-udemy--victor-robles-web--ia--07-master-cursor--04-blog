@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GamerPulse - Dashboard Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#1c2b3c",
+                        "tertiary-fixed": "#dae2fd",
+                        "on-primary": "#00391f",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#d4e4fa",
+                        "surface-container-low": "#0d1c2d",
+                        "inverse-surface": "#d4e4fa",
+                        "surface-container-highest": "#273647",
+                        "surface-container": "#122131",
+                        "outline-variant": "#3b4a3f",
+                        "on-primary-fixed": "#002110",
+                        "tertiary": "#fefbff",
+                        "on-surface-variant": "#b9cbbc",
+                        "secondary-fixed": "#d8e3fb",
+                        "surface-bright": "#2c3a4c",
+                        "primary-container": "#00ff9d",
+                        "surface-variant": "#273647",
+                        "secondary": "#bcc7de",
+                        "on-tertiary-container": "#5a6279",
+                        "outline": "#849587",
+                        "on-background": "#d4e4fa",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#d7dff9",
+                        "inverse-primary": "#006d40",
+                        "inverse-on-surface": "#233143",
+                        "on-secondary-container": "#aeb9d0",
+                        "on-primary-fixed-variant": "#00522f",
+                        "on-secondary-fixed": "#111c2d",
+                        "primary": "#f4fff3",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "surface-dim": "#051424",
+                        "secondary-container": "#3e495d",
+                        "primary-fixed-dim": "#00e38b",
+                        "on-secondary": "#263143",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-primary-container": "#007143",
+                        "primary-fixed": "#56ffa8",
+                        "surface": "#051424",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#131b2e",
+                        "on-tertiary": "#283044",
+                        "background": "#051424",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "surface-container-lowest": "#010f1f",
+                        "surface-tint": "#00e38b",
+                        "on-error": "#690005"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "144rem",
+                        "sm": "0.8rem",
+                        "gutter": "2.4rem",
+                        "xl": "4.8rem",
+                        "unit": "1rem",
+                        "xs": "0.4rem",
+                        "lg": "2.4rem",
+                        "md": "1.6rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Sora"],
+                        "body-md": ["Sora"],
+                        "label-md": ["Sora"],
+                        "headline-xl": ["Sora"],
+                        "headline-lg": ["Sora"],
+                        "label-sm": ["Sora"],
+                        "body-lg": ["Sora"],
+                        "headline-md": ["Sora"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["2.8rem", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-md": ["1.6rem", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["1.4rem", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-xl": ["4.8rem", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg": ["3.2rem", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-sm": ["1.2rem", { "lineHeight": "1", "fontWeight": "500" }],
+                        "body-lg": ["1.8rem", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["2.4rem", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        html { font-size: 62.5%; } /* 1rem = 10px */
+        body { background-color: #0f172a; color: #d4e4fa; }
+        
+        .button--primary {
+            background-color: #00ff9d;
+            color: #0f172a;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .button--primary:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        .card {
+            background-color: #1e293b;
+            border-radius: 1.2rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+        
+        .badge--live {
+            background-color: rgba(0, 255, 157, 0.15);
+            color: #00ff9d;
+        }
+        .badge--draft {
+            background-color: rgba(212, 228, 250, 0.1);
+            color: #d4e4fa;
+        }
+        
+        /* Table styles */
+        .table-row {
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            transition: background-color 0.2s;
+        }
+        .table-row:hover {
+            background-color: rgba(255,255,255,0.02);
+        }
+        .table-row:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md bg-surface antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<nav class="bg-surface-container dark:bg-surface-container fixed left-0 top-0 h-full flex flex-col p-md z-40 w-64 border-r border-surface-container-high hidden md:flex">
+<div class="flex items-center gap-md mb-xl">
+<img class="w-12 h-12 rounded-full object-cover border border-primary/20" data-alt="A futuristic, glowing avatar image of a system administrator in a dark, tech-noir environment. The avatar features a stylized, neon-lit helmet with subtle green accents, reflecting the high-performance gaming aesthetic of GamerPulse. Deep shadows and a sleek, slate-colored background complete the premium corporate modern look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHZ4wBn_xZFQXJ7YEU8VicRqF4DQoQbauYoEqbrfkN3RV9-5tuM_8qNMUqhAMzRNqDYOIxohYE2YYeXdqnMMT_kRTZP-BEiqYfc2u-oiHPPhdrNxUQYzJ57Zhvz92Mb9kd9lCof1iM-xeox7dMHO-EAj23h8Y28PqzRDpq9uWHn78aorD5Cls1tAExuItW4IjdiNx6_QM30byrUVeaLZbrYZUDcCpj4mMexTFlo_XpLCH0APkwdsQG"/>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary font-bold">GP Admin</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">System Manager</div>
+</div>
+</div>
+<button class="button--primary w-full py-md rounded-lg font-label-md text-label-md mb-xl flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+            New Post
+        </button>
+<div class="flex-1 flex flex-col gap-sm overflow-y-auto">
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm rounded-lg hover:bg-surface-container-highest transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm rounded-lg hover:bg-surface-container-highest transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                Analytics
+            </a>
+<a class="flex items-center gap-md bg-secondary-container text-primary rounded-lg px-md py-sm shadow-[0_0_15px_rgba(0,255,157,0.1)] font-label-md text-label-md opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+                Articles
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm rounded-lg hover:bg-surface-container-highest transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">group</span>
+                Users
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm rounded-lg hover:bg-surface-container-highest transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm rounded-lg hover:bg-surface-container-highest transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">history</span>
+                Logs
+            </a>
+</div>
+<div class="mt-auto pt-lg border-t border-surface-container-high flex flex-col gap-sm">
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm rounded-lg hover:bg-surface-container-highest transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-md text-error hover:text-error/80 px-md py-sm rounded-lg hover:bg-surface-container-highest transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 p-lg md:p-xl overflow-y-auto w-full h-full">
+<div class="max-w-[144rem] mx-auto">
+<header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md mb-xl">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-primary font-bold mb-xs">Gestión de Artículos</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Administra, edita y publica contenido para la plataforma.</p>
+</div>
+<button class="button--primary px-lg py-md rounded-lg flex items-center gap-sm font-label-md text-label-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                    Nuevo Artículo
+                </button>
+</header>
+<div class="card p-md md:p-lg mb-xl overflow-x-auto">
+<div class="min-w-[800px]">
+<div class="grid grid-cols-12 gap-md pb-md mb-sm border-b border-surface-container-high font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<div class="col-span-5">Título</div>
+<div class="col-span-2">Categoría</div>
+<div class="col-span-2">Fecha</div>
+<div class="col-span-2">Estado</div>
+<div class="col-span-1 text-right">Acciones</div>
+</div>
+<div class="flex flex-col">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-md items-center py-md table-row">
+<div class="col-span-5">
+<div class="font-label-md text-label-md text-on-surface mb-xs truncate">Nvidia RTX 5090: Todo lo que necesitas saber antes del lanzamiento</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Un análisis profundo de la arquitectura y rendimiento esperado.</div>
+</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface">Hardware</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface-variant">24 Oct, 2024</div>
+<div class="col-span-2">
+<span class="badge badge--live px-sm py-xs rounded-full font-label-sm text-label-sm uppercase flex items-center gap-xs inline-flex">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                                    Publicado
+                                </span>
+</div>
+<div class="col-span-1 flex justify-end gap-sm text-on-surface-variant">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-[2rem]">edit</span></button>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[2rem]">delete</span></button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-md items-center py-md table-row">
+<div class="col-span-5">
+<div class="font-label-md text-label-md text-on-surface mb-xs truncate">Reseña: Cyberpunk 2077 - Phantom Liberty</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Cómo la expansión redime completamente la experiencia original.</div>
+</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface">Reviews</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface-variant">23 Oct, 2024</div>
+<div class="col-span-2">
+<span class="badge badge--live px-sm py-xs rounded-full font-label-sm text-label-sm uppercase flex items-center gap-xs inline-flex">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                                    Publicado
+                                </span>
+</div>
+<div class="col-span-1 flex justify-end gap-sm text-on-surface-variant">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-[2rem]">edit</span></button>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[2rem]">delete</span></button>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="grid grid-cols-12 gap-md items-center py-md table-row">
+<div class="col-span-5">
+<div class="font-label-md text-label-md text-on-surface mb-xs truncate">Guía de optimización para Counter-Strike 2</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Ajustes gráficos para alcanzar los máximos FPS posibles en competitivo.</div>
+</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface">eSports</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface-variant">--</div>
+<div class="col-span-2">
+<span class="badge badge--draft px-sm py-xs rounded-full font-label-sm text-label-sm uppercase inline-flex">
+                                    Borrador
+                                </span>
+</div>
+<div class="col-span-1 flex justify-end gap-sm text-on-surface-variant">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-[2rem]">edit</span></button>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[2rem]">delete</span></button>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="grid grid-cols-12 gap-md items-center py-md table-row">
+<div class="col-span-5">
+<div class="font-label-md text-label-md text-on-surface mb-xs truncate">Entrevista: El futuro del Unreal Engine 5</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant truncate">Hablamos con los desarrolladores líderes de Epic Games.</div>
+</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface">News</div>
+<div class="col-span-2 font-body-sm text-body-sm text-on-surface-variant">--</div>
+<div class="col-span-2">
+<span class="badge badge--draft px-sm py-xs rounded-full font-label-sm text-label-sm uppercase inline-flex">
+                                    Borrador
+                                </span>
+</div>
+<div class="col-span-1 flex justify-end gap-sm text-on-surface-variant">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined text-[2rem]">edit</span></button>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[2rem]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>Mostrando 4 de 42 artículos</span>
+<div class="flex gap-sm">
+<button class="px-md py-sm rounded border border-surface-container-high hover:bg-surface-container transition-colors disabled:opacity-50">Anterior</button>
+<button class="px-md py-sm rounded border border-surface-container-high hover:bg-surface-container transition-colors">Siguiente</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

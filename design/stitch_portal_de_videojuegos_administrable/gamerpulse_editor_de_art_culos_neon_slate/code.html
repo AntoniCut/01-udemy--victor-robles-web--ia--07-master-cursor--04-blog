@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es" style="font-size: 62.5%;"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GamerPulse - Editor de Artículos</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#1c2b3c",
+                    "tertiary-fixed": "#dae2fd",
+                    "on-primary": "#00391f",
+                    "on-error-container": "#ffdad6",
+                    "on-surface": "#d4e4fa",
+                    "surface-container-low": "#0d1c2d",
+                    "inverse-surface": "#d4e4fa",
+                    "surface-container-highest": "#273647",
+                    "surface-container": "#122131",
+                    "outline-variant": "#3b4a3f",
+                    "on-primary-fixed": "#002110",
+                    "tertiary": "#fefbff",
+                    "on-surface-variant": "#b9cbbc",
+                    "secondary-fixed": "#d8e3fb",
+                    "surface-bright": "#2c3a4c",
+                    "primary-container": "#00ff9d",
+                    "surface-variant": "#273647",
+                    "secondary": "#bcc7de",
+                    "on-tertiary-container": "#5a6279",
+                    "outline": "#849587",
+                    "on-background": "#d4e4fa",
+                    "error-container": "#93000a",
+                    "tertiary-container": "#d7dff9",
+                    "inverse-primary": "#006d40",
+                    "inverse-on-surface": "#233143",
+                    "on-secondary-container": "#aeb9d0",
+                    "on-primary-fixed-variant": "#00522f",
+                    "on-secondary-fixed": "#111c2d",
+                    "primary": "#f4fff3",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "surface-dim": "#051424",
+                    "secondary-container": "#3e495d",
+                    "primary-fixed-dim": "#00e38b",
+                    "on-secondary": "#263143",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#007143",
+                    "primary-fixed": "#56ffa8",
+                    "surface": "#051424",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed": "#131b2e",
+                    "on-tertiary": "#283044",
+                    "background": "#051424",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "surface-container-lowest": "#010f1f",
+                    "surface-tint": "#00e38b",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "144rem",
+                    "sm": "0.8rem",
+                    "gutter": "2.4rem",
+                    "xl": "4.8rem",
+                    "unit": "1rem",
+                    "xs": "0.4rem",
+                    "lg": "2.4rem",
+                    "md": "1.6rem"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Sora"],
+                    "body-md": ["Sora"],
+                    "label-md": ["Sora"],
+                    "headline-xl": ["Sora"],
+                    "headline-lg": ["Sora"],
+                    "label-sm": ["Sora"],
+                    "body-lg": ["Sora"],
+                    "headline-md": ["Sora"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["2.8rem", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-md": ["1.6rem", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["1.4rem", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-xl": ["4.8rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["3.2rem", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["1.2rem", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-lg": ["1.8rem", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["2.4rem", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* BEM Component Styles based on Style Guidance */
+        
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            border-radius: 0.5rem; /* lg */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .button--primary {
+            background-color: #00ff9d; /* primary-container */
+            color: #007143; /* on-primary-container */
+            font-weight: 700;
+        }
+        
+        .button--primary:hover {
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+            filter: brightness(1.1);
+        }
+
+        .button--secondary {
+            background-color: transparent;
+            border: 1px solid #00ff9d;
+            color: #00ff9d;
+        }
+        
+        .button--secondary:hover {
+            background-color: rgba(0, 255, 157, 0.1);
+        }
+
+        .button--icon-only {
+            padding: 0.8rem;
+            background-color: transparent;
+            color: #b9cbbc; /* on-surface-variant */
+        }
+        
+        .button--icon-only:hover {
+            background-color: rgba(255,255,255,0.05);
+            color: #f4fff3; /* primary */
+        }
+
+        .card {
+            background-color: #1e293b; /* Fallback for secondary-ish, using surface-container-highest */
+            border-radius: 1.2rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .input__field {
+            background-color: #0d1c2d; /* surface-container-low */
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            color: #d4e4fa; /* on-surface */
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .input__field:focus {
+            border-color: #00ff9d;
+            box-shadow: 0 0 10px rgba(0, 255, 157, 0.15);
+            outline: none;
+        }
+        
+        /* Custom scrollbar for editor */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #051424; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #273647; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3e495d; 
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex">
+<!-- SIDE NAV BAR (From JSON) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-md z-40 bg-surface-container dark:bg-surface-container docked h-full w-64 border-r border-surface-container-high dark:border-surface-container-high shadow-none">
+<!-- Header / Identity -->
+<div class="flex items-center gap-md mb-xl px-sm">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="A macro photography shot of a sleek, futuristic metallic sphere glowing with internal neon green light, set against a dark textured carbon fiber background. The lighting is cinematic, highlighting the intricate technological details and creating a high-tech, premium gamer aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcfdV-eIz8xQCFCmvXNpr2IPOqLS9UzJhZ2Mb8pn1jVzwL_EOTsBuX60oAVfX2SYjtRvZCw5YhxEPBOSUj9VzQLvC3kzawHosuf72kw8RQgoAbya4mX7Bj7SYvZPm8phO8dlQf__rFhuwgiX3hhAPNXT_KtMFsB4HC-6XdazzYd-KG1qLNTe4HmAmXgROYLPiJvP7TmgmY0NqGQLAgkhgXZZVZVsqTDanzvQHGpfGAW7LywfotvOlT"/>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary m-0">GP Admin</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0">System Manager</p>
+</div>
+</div>
+<!-- CTA -->
+<button class="button button--primary w-full py-md px-md mb-xl font-label-md text-label-md flex justify-center items-center gap-sm">
+<span class="material-symbols-outlined">add</span>
+            New Post
+        </button>
+<!-- Main Navigation -->
+<nav class="flex-1 flex flex-col gap-sm">
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm font-label-md text-label-md hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm font-label-md text-label-md hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                Analytics
+            </a>
+<!-- ACTIVE ITEM -->
+<a class="flex items-center gap-md bg-secondary-container text-primary rounded-lg px-md py-sm shadow-[0_0_15px_rgba(0,255,157,0.1)] font-label-md text-label-md hover:bg-surface-container-highest transition-all opacity-80" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+                Articles
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm font-label-md text-label-md hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">group</span>
+                Users
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm font-label-md text-label-md hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm font-label-md text-label-md hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+                Logs
+            </a>
+</nav>
+<!-- Footer Navigation -->
+<div class="mt-auto flex flex-col gap-sm pt-md border-t border-surface-container-high">
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm font-label-md text-label-md hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-md py-sm font-label-md text-label-md hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-64 flex-1 flex flex-col min-h-screen relative">
+<!-- Subtle background effect -->
+<div class="absolute inset-0 z-0 pointer-events-none" style="background: radial-gradient(circle at top right, rgba(0,255,157,0.03), transparent 40%);"></div>
+<!-- Top Header Panel -->
+<header class="w-full px-xl py-lg flex justify-between items-center z-10 sticky top-0 bg-surface/80 backdrop-blur-md border-b border-surface-container-high">
+<div class="flex flex-col">
+<div class="flex items-center gap-sm text-label-sm text-on-surface-variant mb-xs">
+<span>Articles</span>
+<span class="material-symbols-outlined text-[1.4rem]">chevron_right</span>
+<span class="text-primary-container">Redactar Nuevo</span>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface m-0">Editor de Artículos</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="button button--secondary py-sm px-lg font-label-md text-label-md">
+                    Guardar Borrador
+                </button>
+<button class="button button--primary py-sm px-lg font-label-md text-label-md">
+                    Publicar
+                    <span class="material-symbols-outlined text-[1.8rem]">send</span>
+</button>
+</div>
+</header>
+<!-- Editor Workspace Grid -->
+<div class="p-xl grid grid-cols-1 md:grid-cols-12 gap-xl flex-1 z-10 w-full max-w-[144rem] mx-auto">
+<!-- Main Content Column (Editor) -->
+<div class="col-span-1 md:col-span-8 flex flex-col gap-lg h-full">
+<!-- Title Input -->
+<div class="card bg-surface-container-highest p-md relative group">
+<input class="w-full bg-transparent border-none outline-none font-headline-lg text-headline-lg text-on-surface placeholder:text-on-surface-variant focus:ring-0 px-sm py-xs" placeholder="Ingresa el título del artículo..." type="text"/>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-primary-container transition-all duration-300 group-focus-within:w-full"></div>
+</div>
+<!-- Rich Text Editor Container -->
+<div class="card bg-surface-container-highest flex-1 flex flex-col min-h-[50rem] overflow-hidden shadow-sm">
+<!-- Formatting Toolbar -->
+<div class="flex items-center gap-xs p-sm border-b border-surface-container-high bg-surface-container flex-wrap">
+<div class="flex items-center gap-xs border-r border-surface-container-high pr-sm mr-sm">
+<select class="input__field bg-surface-container-low border-none text-label-sm py-xs px-sm h-[3.2rem]">
+<option>Párrafo</option>
+<option>Título 1</option>
+<option>Título 2</option>
+<option>Cita</option>
+</select>
+</div>
+<div class="flex items-center gap-xs border-r border-surface-container-high pr-sm mr-sm">
+<button class="button--icon-only rounded" title="Bold"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">format_bold</span></button>
+<button class="button--icon-only rounded" title="Italic"><span class="material-symbols-outlined">format_italic</span></button>
+<button class="button--icon-only rounded" title="Underline"><span class="material-symbols-outlined">format_underlined</span></button>
+<button class="button--icon-only rounded" title="Strikethrough"><span class="material-symbols-outlined">format_strikethrough</span></button>
+</div>
+<div class="flex items-center gap-xs border-r border-surface-container-high pr-sm mr-sm">
+<button class="button--icon-only rounded" title="Bullet List"><span class="material-symbols-outlined">format_list_bulleted</span></button>
+<button class="button--icon-only rounded" title="Numbered List"><span class="material-symbols-outlined">format_list_numbered</span></button>
+<button class="button--icon-only rounded" title="Blockquote"><span class="material-symbols-outlined">format_quote</span></button>
+</div>
+<div class="flex items-center gap-xs">
+<button class="button--icon-only rounded" title="Insert Link"><span class="material-symbols-outlined">link</span></button>
+<button class="button--icon-only rounded" title="Insert Image"><span class="material-symbols-outlined">image</span></button>
+<button class="button--icon-only rounded" title="Insert Code Block"><span class="material-symbols-outlined">code</span></button>
+</div>
+</div>
+<!-- Editor Editable Area -->
+<div class="flex-1 p-lg overflow-y-auto cursor-text bg-surface-container-low" contenteditable="true">
+<p class="font-body-md text-body-md text-on-surface-variant outline-none">Comienza a escribir tu artículo aquí...</p>
+</div>
+</div>
+</div>
+<!-- Sidebar Panels (Meta Data & Cover) -->
+<div class="col-span-1 md:col-span-4 flex flex-col gap-lg">
+<!-- Status Panel -->
+<div class="card bg-surface-container-highest p-lg">
+<h3 class="font-label-md text-label-md text-primary mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-[1.8rem]">info</span>
+                        Estado del Documento
+                    </h3>
+<div class="flex items-center justify-between mb-md pb-md border-b border-surface-container-high">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Visibilidad</span>
+<span class="badge px-sm py-xs rounded bg-surface-container-low text-on-surface border border-outline-variant text-[1rem] font-bold uppercase flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-error-container"></span> Privado
+                        </span>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Última modificación</span>
+<span class="font-body-md text-body-md text-on-surface">Hace 2 minutos</span>
+</div>
+</div>
+<!-- Meta Data Panel -->
+<div class="card bg-surface-container-highest p-lg">
+<h3 class="font-label-md text-label-md text-primary mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-[1.8rem]">label</span>
+                        Metadatos
+                    </h3>
+<div class="flex flex-col gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Categoría Principal</label>
+<select class="input__field w-full py-sm px-md font-body-md text-body-md">
+<option disabled="" selected="" value="">Selecciona una categoría</option>
+<option value="hardware">Hardware & Periféricos</option>
+<option value="esports">eSports Competitivo</option>
+<option value="reviews">Reviews de Juegos</option>
+<option value="news">Noticias de la Industria</option>
+</select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Etiquetas (Separadas por coma)</label>
+<input class="input__field w-full py-sm px-md font-body-md text-body-md" placeholder="ej. rtx 4090, nvidia, benchmark" type="text"/>
+</div>
+</div>
+</div>
+<!-- Cover Image Panel -->
+<div class="card bg-surface-container-highest p-lg">
+<h3 class="font-label-md text-label-md text-primary mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-[1.8rem]">image</span>
+                        Imagen de Portada
+                    </h3>
+<!-- Upload Dropzone -->
+<div class="w-full h-48 rounded-lg border-2 border-dashed border-outline-variant bg-surface-container-low flex flex-col items-center justify-center gap-sm cursor-pointer hover:border-primary-container transition-colors relative overflow-hidden group">
+<!-- Initial state (no image) -->
+<div class="flex flex-col items-center gap-sm text-on-surface-variant group-hover:text-primary-container transition-colors z-10">
+<span class="material-symbols-outlined text-[3.2rem]">cloud_upload</span>
+<span class="font-label-sm text-label-sm text-center px-lg">Arrastra una imagen o haz clic para subir<br/>(Recomendado: 1920x1080)</span>
+</div>
+<!-- Hidden file input -->
+<input accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" type="file"/>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
