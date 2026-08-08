@@ -1524,10 +1524,10 @@ p {
 .data-table__row {
     display: grid;
     grid-template-columns:
+        auto
         minmax(0, 2.4fr)
         minmax(0, 1fr)
         minmax(0, 1fr)
-        minmax(0, 1.2fr)
         auto;
     gap: var(--space-sm);
     align-items: center;
@@ -1550,6 +1550,7 @@ p {
     letter-spacing: 0.05em;
 }
 
+.data-table__col--image,
 .data-table__col--title,
 .data-table__col--category,
 .data-table__col--date,
@@ -1558,6 +1559,25 @@ p {
     grid-column: auto;
     min-width: 0;
     overflow: hidden;
+}
+
+.data-table__thumb {
+    width: 9.6rem;
+    height: 5.4rem;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    display: block;
+    background-color: var(--color-surface-container-low);
+}
+
+.data-table__thumb--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 30% 30%, var(--color-primary-soft-10), transparent 60%),
+        var(--color-surface-container-low);
+    color: var(--color-primary-container);
 }
 
 .data-table__col--actions {

@@ -207,9 +207,10 @@
 .data-table--blog .data-table__head,
 .data-table--blog .data-table__row {
     grid-template-columns:
+        auto
         minmax(0, 2.4fr)
         minmax(0, 1fr)
-        minmax(0, 1.2fr)
+        minmax(0, 1fr)
         auto;
 }
 

@@ -223,6 +223,7 @@ export const AdminDashboard = () => {
                         {!cargando && articulosFiltrados.length > 0 && (
                             <div className="data-table__scroll">
                                 <div className="data-table__head text-label-sm">
+                                    <div className="data-table__col--image">Imagen</div>
                                     <div className="data-table__col--title">Título</div>
                                     <div className="data-table__col--date">Fecha</div>
                                     <div className="data-table__col--status">Estado</div>
@@ -231,6 +232,25 @@ export const AdminDashboard = () => {
                                 <div className="data-table__body">
                                     {articulosFiltrados.map((articulo) => (
                                         <div className="data-table__row" key={articulo.id}>
+                                            <div className="data-table__col--image">
+                                                {articulo.image_url ? (
+                                                    <img
+                                                        className="data-table__thumb"
+                                                        src={articulo.image_url}
+                                                        alt={articulo.title}
+                                                        loading="lazy"
+                                                    />
+                                                ) : (
+                                                    <div
+                                                        className="data-table__thumb data-table__thumb--placeholder"
+                                                        aria-hidden="true"
+                                                    >
+                                                        <span className="material-symbols-outlined">
+                                                            sports_esports
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </div>
                                             <div className="data-table__col--title">
                                                 <div className="data-table__title text-label-md">
                                                     {articulo.title}
