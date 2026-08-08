@@ -4,7 +4,6 @@
     *  -----------------------------------------  *
 */
 
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App.jsx";
 import { ProveedorAuth } from "./context/AuthContext.jsx";
@@ -19,13 +18,11 @@ const contenedorRaiz = /** @type {HTMLDivElement} */ (
 );
 
 createRoot(contenedorRaiz).render(
-    <StrictMode>
-        <ProveedorRouter>
-            <ProveedorAuth>
-                <ProveedorToast>
-                    <App />
-                </ProveedorToast>
-            </ProveedorAuth>
-        </ProveedorRouter>
-    </StrictMode>
+    <ProveedorRouter>
+        <ProveedorAuth>
+            <ProveedorToast>
+                <App />
+            </ProveedorToast>
+        </ProveedorAuth>
+    </ProveedorRouter>
 );

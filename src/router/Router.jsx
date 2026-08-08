@@ -15,7 +15,7 @@ const RouterContext = createContext(null);
  * --------------------------------------------
  * - Proveedor que mantiene la ruta actual sincronizada con la History API.
  * @param {{ children: import("react").ReactNode }} props - Componentes hijos.
- * @return {JSX.Element} - Proveedor del contexto del enrutador.
+ * @return {import("react").JSX.Element} - Proveedor del contexto del enrutador.
  */
 export const ProveedorRouter = ({ children }) => {
     /** - `ruta actual del navegador` */
@@ -40,6 +40,11 @@ export const ProveedorRouter = ({ children }) => {
      * @return {void}
      */
     const navegar = (destino) => {
+        //  -----  si ya estamos en la misma ruta, no hacer nada  -----
+        if (destino === window.location.pathname) {
+            return;
+        }
+
         window.history.pushState({}, "", destino);
         setRuta(destino);
         window.scrollTo(0, 0);
@@ -67,7 +72,7 @@ export const useRouter = () => useContext(RouterContext);
  * ----------------------------------------------------------------
  * - Enlace interno que navega sin recargar la página.
  * @param {{ href: string, className?: string, ariaLabel?: string, children: import("react").ReactNode }} props - Datos del enlace.
- * @return {JSX.Element} - Elemento ancla con navegación interna.
+ * @return {import("react").JSX.Element} - Elemento ancla con navegación interna.
  */
 export const Enlace = ({ href, className, ariaLabel, children }) => {
     const { navegar } = useRouter();

@@ -11,7 +11,7 @@ import { Enlace } from "../router/Router.jsx";
  * -----  `PiePagina()`  -----
  * --------------------------
  * - Pie de página público con la marca y los enlaces básicos.
- * @return {JSX.Element} - Pie de página de la parte pública.
+ * @return {import("react").JSX.Element} - Pie de página de la parte pública.
  */
 export const PiePagina = () => {
     return (

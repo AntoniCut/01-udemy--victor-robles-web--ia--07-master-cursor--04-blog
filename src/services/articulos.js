@@ -11,6 +11,62 @@ import { supabase } from "../lib/supabase.js";
 /** - `número de artículos por página en el listado público` */
 export const ARTICULOS_POR_PAGINA = 6;
 
+/** @type {Map<number, { articulos: Articulo[], total: number }>} - `caché del listado público por página` */
+const cachePublicados = new Map();
+
+/** @type {Map<string, Articulo>} - `caché de artículos por slug` */
+const cachePorSlug = new Map();
+
+/**
+ * ---------------------------------------
+ * -----  `guardarEnCacheSlug(lista)`  -----
+ * ---------------------------------------
+ * - Guarda artículos en la caché por slug para abrir el detalle sin parpadeo.
+ * @param {Articulo[]} lista - Artículos a cachear.
+ * @return {void}
+ */
+const guardarEnCacheSlug = (lista) => {
+    for (const articulo of lista) {
+        cachePorSlug.set(articulo.slug, articulo);
+    }
+};
+
+/**
+ * ------------------------------------
+ * -----  `invalidarCachesPublicos()`  -----
+ * ------------------------------------
+ * - Limpia las cachés públicas tras crear, editar o eliminar.
+ * @return {void}
+ */
+const invalidarCachesPublicos = () => {
+    cachePublicados.clear();
+    cachePorSlug.clear();
+};
+
+/**
+ * ----------------------------------------------
+ * -----  `leerCachePublicados(pagina)`  -----
+ * ----------------------------------------------
+ * - Lee la caché del listado público de una página.
+ * @param {number} pagina - Número de página.
+ * @return {{ articulos: Articulo[], total: number }|null} - Datos cacheados o null.
+ */
+export const leerCachePublicados = (pagina) => {
+    return cachePublicados.get(pagina) ?? null;
+};
+
+/**
+ * ----------------------------------------
+ * -----  `leerCachePorSlug(slug)`  -----
+ * ----------------------------------------
+ * - Lee la caché de un artículo por su slug.
+ * @param {string} slug - Slug del artículo.
+ * @return {Articulo|null} - Artículo cacheado o null.
+ */
+export const leerCachePorSlug = (slug) => {
+    return cachePorSlug.get(slug) ?? null;
+};
+
 /**
  * ------------------------------------------
  * -----  `obtenerPublicados(pagina)`  -----
@@ -33,7 +89,16 @@ export const obtenerPublicados = async (pagina) => {
         .order("created_at", { ascending: false })
         .range(desde, hasta);
 
-    return { articulos: data ?? [], total: count ?? 0, error: Boolean(error) };
+    /** @type {Articulo[]} - `artículos obtenidos de la consulta` */
+    const articulos = data ?? [];
+
+    //  -----  guardar en caché si la consulta fue correcta  -----
+    if (!error) {
+        cachePublicados.set(pagina, { articulos, total: count ?? 0 });
+        guardarEnCacheSlug(articulos);
+    }
+
+    return { articulos, total: count ?? 0, error: Boolean(error) };
 };
 
 /**
@@ -50,6 +115,11 @@ export const obtenerPorSlug = async (slug) => {
         .select("*")
         .eq("slug", slug)
         .maybeSingle();
+
+    //  -----  guardar en caché si existe  -----
+    if (data) {
+        cachePorSlug.set(slug, data);
+    }
 
     return data;
 };
@@ -71,7 +141,10 @@ export const obtenerRelacionados = async (slugActual) => {
         .order("created_at", { ascending: false })
         .limit(3);
 
-    return data ?? [];
+    /** @type {Articulo[]} - `artículos relacionados` */
+    const relacionados = data ?? [];
+    guardarEnCacheSlug(relacionados);
+    return relacionados;
 };
 
 /**
@@ -155,7 +228,15 @@ export const crearArticulo = async (articulo) => {
             .select()
             .single();
 
+        if (!reintento.error) {
+            invalidarCachesPublicos();
+        }
+
         return { articulo: reintento.data, error: Boolean(reintento.error) };
+    }
+
+    if (!error) {
+        invalidarCachesPublicos();
     }
 
     return { articulo: data, error: Boolean(error) };
@@ -178,6 +259,10 @@ export const actualizarArticulo = async (id, cambios) => {
         .select()
         .single();
 
+    if (!error) {
+        invalidarCachesPublicos();
+    }
+
     return { articulo: data, error: Boolean(error) };
 };
 
@@ -191,6 +276,11 @@ export const actualizarArticulo = async (id, cambios) => {
  */
 export const eliminarArticulo = async (id) => {
     const { error } = await supabase.from("articles").delete().eq("id", id);
+
+    if (!error) {
+        invalidarCachesPublicos();
+    }
+
     return Boolean(error);
 };
 

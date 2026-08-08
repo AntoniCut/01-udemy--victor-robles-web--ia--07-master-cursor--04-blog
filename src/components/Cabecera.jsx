@@ -12,7 +12,7 @@ import { Enlace } from "../router/Router.jsx";
  * -----  `Cabecera()`  -----
  * -------------------------
  * - Cabecera pública con la marca, la navegación y el acceso al panel.
- * @return {JSX.Element} - Cabecera de la parte pública.
+ * @return {import("react").JSX.Element} - Cabecera de la parte pública.
  */
 export const Cabecera = () => {
     const { usuario } = useAuth();

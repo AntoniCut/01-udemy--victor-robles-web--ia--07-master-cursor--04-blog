@@ -13,7 +13,7 @@ import { Enlace, useRouter } from "../router/Router.jsx";
  * -----------------------------
  * - Navegación del panel de administración: barra lateral en escritorio
  *   y barra superior en móvil.
- * @return {JSX.Element} - Navegación completa del panel.
+ * @return {import("react").JSX.Element} - Navegación completa del panel.
  */
 export const BarraLateral = () => {
     const { usuario, cerrarSesion } = useAuth();

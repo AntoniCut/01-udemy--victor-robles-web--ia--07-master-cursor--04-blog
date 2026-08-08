@@ -7,7 +7,6 @@
 /// <reference path="../../types/types.d.js" />
 
 import { useEffect, useState } from "react";
-import { BarraLateral } from "../components/BarraLateral.jsx";
 import { ModalConfirmacion } from "../components/ModalConfirmacion.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
@@ -24,7 +23,7 @@ import {
  * -----  `AdminDashboard()`  -----
  * -------------------------------
  * - Panel de administración con la tabla de artículos del autor.
- * @return {JSX.Element} - Página del dashboard de administración.
+ * @return {import("react").JSX.Element} - Página del dashboard de administración.
  */
 export const AdminDashboard = () => {
     const { usuario } = useAuth();
@@ -103,8 +102,7 @@ export const AdminDashboard = () => {
     };
 
     return (
-        <div className="page-dashboard">
-            <BarraLateral />
+        <>
             <main className="page-dashboard__main">
                 <div className="page-dashboard__inner">
                     <header className="page-dashboard__header">
@@ -254,6 +252,6 @@ export const AdminDashboard = () => {
                 alConfirmar={alConfirmarEliminar}
                 alCancelar={() => setArticuloAEliminar(null)}
             />
-        </div>
+        </>
     );
 };

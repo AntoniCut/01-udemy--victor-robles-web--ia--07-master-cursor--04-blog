@@ -10,7 +10,7 @@
  * ------------------------------------------------------------------------------------
  * - Ventana modal de confirmación con los estilos de la web.
  * @param {{ abierto: boolean, titulo: string, mensaje: string, alConfirmar: () => void, alCancelar: () => void }} props - Estado y callbacks del modal.
- * @return {JSX.Element|null} - Modal de confirmación o null si está cerrado.
+ * @return {import("react").JSX.Element|null} - Modal de confirmación o null si está cerrado.
  */
 export const ModalConfirmacion = ({
     abierto,

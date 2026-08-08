@@ -17,7 +17,7 @@ const ToastContext = createContext(null);
  * -------------------------------------------
  * - Proveedor que muestra avisos visuales temporales en el DOM.
  * @param {{ children: import("react").ReactNode }} props - Componentes hijos.
- * @return {JSX.Element} - Proveedor del contexto de avisos.
+ * @return {import("react").JSX.Element} - Proveedor del contexto de avisos.
  */
 export const ProveedorToast = ({ children }) => {
     /** @type {[Aviso[], Function]} - `lista de avisos visibles` */

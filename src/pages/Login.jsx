@@ -13,7 +13,7 @@ import { useRouter } from "../router/Router.jsx";
  * -----  `Login()`  -----
  * ----------------------
  * - Página de acceso con pestañas para iniciar sesión y registrarse.
- * @return {JSX.Element} - Página de login y registro.
+ * @return {import("react").JSX.Element} - Página de login y registro.
  */
 export const Login = () => {
     const { usuario, cargando, iniciarSesion, registrarse } = useAuth();

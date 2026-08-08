@@ -15,7 +15,7 @@ import { Enlace } from "../router/Router.jsx";
  * --------------------------------------------
  * - Tarjeta de un artículo dentro del listado público.
  * @param {{ articulo: Articulo }} props - Artículo a mostrar.
- * @return {JSX.Element} - Tarjeta enlazada al detalle del artículo.
+ * @return {import("react").JSX.Element} - Tarjeta enlazada al detalle del artículo.
  */
 export const TarjetaArticulo = ({ articulo }) => {
     return (

@@ -14,7 +14,7 @@ import { useRouter } from "../router/Router.jsx";
  * ------------------------------------------
  * - Protege una ruta: si no hay sesión redirige al login.
  * @param {{ children: import("react").ReactNode }} props - Contenido protegido.
- * @return {JSX.Element|null} - Contenido protegido, un cargador o null.
+ * @return {import("react").JSX.Element|null} - Contenido protegido, un cargador o null.
  */
 export const RutaProtegida = ({ children }) => {
     const { usuario, cargando } = useAuth();

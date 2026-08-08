@@ -10,7 +10,7 @@
  * ----------------------------------------------------------------
  * - Controles de paginación del listado público de artículos.
  * @param {{ pagina: number, totalPaginas: number, alCambiar: (pagina: number) => void }} props - Estado y callback de paginación.
- * @return {JSX.Element|null} - Navegación de páginas o null si solo hay una.
+ * @return {import("react").JSX.Element|null} - Navegación de páginas o null si solo hay una.
  */
 export const Paginacion = ({ pagina, totalPaginas, alCambiar }) => {
     //  -----  si solo hay una página, no mostrar la paginación  -----

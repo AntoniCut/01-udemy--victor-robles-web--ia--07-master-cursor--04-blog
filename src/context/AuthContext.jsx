@@ -16,7 +16,7 @@ const AuthContext = createContext(null);
  * ------------------------------------------
  * - Proveedor que gestiona la sesión de Supabase (login, registro y logout).
  * @param {{ children: import("react").ReactNode }} props - Componentes hijos.
- * @return {JSX.Element} - Proveedor del contexto de autenticación.
+ * @return {import("react").JSX.Element} - Proveedor del contexto de autenticación.
  */
 export const ProveedorAuth = ({ children }) => {
     /** - `usuario autenticado o null si no hay sesión` */

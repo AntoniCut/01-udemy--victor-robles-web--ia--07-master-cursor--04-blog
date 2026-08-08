@@ -7,7 +7,6 @@
 /// <reference path="../../types/types.d.js" />
 
 import { useEffect, useState } from "react";
-import { BarraLateral } from "../components/BarraLateral.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 import { formatearFecha } from "../lib/fechas.js";
@@ -25,7 +24,7 @@ import {
  * ----------------------------------
  * - Editor para crear un artículo nuevo o editar uno existente.
  * @param {{ id?: string }} props - Identificador del artículo a editar (opcional).
- * @return {JSX.Element} - Página del editor de artículos.
+ * @return {import("react").JSX.Element} - Página del editor de artículos.
  */
 export const AdminEditor = ({ id }) => {
     const { usuario } = useAuth();
@@ -163,16 +162,14 @@ export const AdminEditor = ({ id }) => {
     };
 
     return (
-        <div className="page-editor">
-            <BarraLateral />
-            <main className="page-editor__main">
-                <div className="page-editor__bg" aria-hidden="true"></div>
-                {cargando ? (
-                    <div className="cargador" role="status" aria-label="Cargando artículo">
-                        <span className="cargador__circulo" aria-hidden="true"></span>
-                    </div>
-                ) : (
-                    <form onSubmit={alEnviarFormulario}>
+        <main className="page-editor__main">
+            <div className="page-editor__bg" aria-hidden="true"></div>
+            {cargando ? (
+                <div className="cargador" role="status" aria-label="Cargando artículo">
+                    <span className="cargador__circulo" aria-hidden="true"></span>
+                </div>
+            ) : (
+                <form onSubmit={alEnviarFormulario}>
                         <header className="page-editor__header">
                             <div>
                                 <div className="page-editor__breadcrumb text-label-sm">
@@ -347,9 +344,8 @@ export const AdminEditor = ({ id }) => {
                                 </div>
                             </aside>
                         </div>
-                    </form>
-                )}
-            </main>
-        </div>
+                </form>
+            )}
+        </main>
     );
 };
