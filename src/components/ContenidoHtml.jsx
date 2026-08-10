@@ -6,6 +6,7 @@
 
 import { createElement, useMemo } from "react";
 import { pareceHtml, sanitizarHtml, textoPlanoAHtml } from "../lib/html.js";
+import { IMAGEN_ARTICULO_FALLBACK } from "../lib/imagenes.js";
 
 /** @type {Record<string, string>} - `mapeo de etiquetas a nombres React` */
 const ALIAS = {
@@ -76,8 +77,18 @@ const nodoAReact = (nodo, clave) => {
     if (etiqueta === "img") {
         return createElement("img", {
             key: clave,
-            src: elemento.getAttribute("src") ?? "",
+            src: elemento.getAttribute("src") ?? IMAGEN_ARTICULO_FALLBACK,
             alt: elemento.getAttribute("alt") ?? "",
+            onError: (evento) => {
+                /** @type {HTMLImageElement} - `imagen que falló al cargar` */
+                const imagen = /** @type {HTMLImageElement} */ (
+                    evento.currentTarget
+                );
+
+                if (!imagen.src.includes(IMAGEN_ARTICULO_FALLBACK)) {
+                    imagen.src = IMAGEN_ARTICULO_FALLBACK;
+                }
+            },
         });
     }
 

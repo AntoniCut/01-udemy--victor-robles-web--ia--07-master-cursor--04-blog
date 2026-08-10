@@ -8,6 +8,7 @@
 
 import { useEffect, useState } from "react";
 import { EditorEnriquecido } from "../components/EditorEnriquecido.jsx";
+import { ImagenConFallback } from "../components/ImagenConFallback.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 import { formatearFecha } from "../lib/fechas.js";
@@ -379,10 +380,11 @@ export const AdminEditor = ({ id }) => {
                                             />
                                         </div>
                                         {imagenUrl.trim() !== "" && (
-                                            <img
+                                            <ImagenConFallback
                                                 className="editor-panel__vista-previa"
                                                 src={imagenUrl}
                                                 alt="Vista previa de la portada"
+                                                loading="eager"
                                             />
                                         )}
                                     </div>

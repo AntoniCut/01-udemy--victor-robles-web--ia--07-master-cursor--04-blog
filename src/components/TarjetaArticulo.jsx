@@ -13,6 +13,7 @@ import {
 } from "../lib/transiciones.js";
 import { Enlace } from "../router/Router.jsx";
 import { nombreCategoria } from "../services/articulos.js";
+import { ImagenConFallback } from "./ImagenConFallback.jsx";
 
 /**
  * --------------------------------------------
@@ -30,32 +31,16 @@ export const TarjetaArticulo = ({ articulo }) => {
         >
             <article>
                 <div className="article-card__media">
-                    {articulo.image_url ? (
-                        <img
-                            className="article-card__image"
-                            src={articulo.image_url}
-                            alt={articulo.title}
-                            style={{
-                                viewTransitionName: nombreTransicionImagen(
-                                    articulo.slug
-                                ),
-                            }}
-                        />
-                    ) : (
-                        <div
-                            className="article-card__placeholder"
-                            aria-hidden="true"
-                            style={{
-                                viewTransitionName: nombreTransicionImagen(
-                                    articulo.slug
-                                ),
-                            }}
-                        >
-                            <span className="material-symbols-outlined material-symbols-outlined--xl">
-                                sports_esports
-                            </span>
-                        </div>
-                    )}
+                    <ImagenConFallback
+                        className="article-card__image"
+                        src={articulo.image_url}
+                        alt={articulo.title}
+                        style={{
+                            viewTransitionName: nombreTransicionImagen(
+                                articulo.slug
+                            ),
+                        }}
+                    />
                     <div className="article-card__shade"></div>
                 </div>
                 <div className="article-card__body">

@@ -8,6 +8,7 @@
 
 import { useEffect, useState } from "react";
 import { ContenidoHtml } from "../components/ContenidoHtml.jsx";
+import { ImagenConFallback } from "../components/ImagenConFallback.jsx";
 import { calcularMinutosLectura, formatearFecha } from "../lib/fechas.js";
 import {
     nombreTransicionImagen,
@@ -148,35 +149,20 @@ export const DetalleArticulo = ({ slug }) => {
                             </span>
                         </div>
                     </div>
-                    {articulo.image_url ? (
-                        <div className="article__cover">
-                            <img
-                                className="article__cover-image"
-                                src={articulo.image_url}
-                                alt={articulo.title}
-                                style={{
-                                    viewTransitionName: nombreTransicionImagen(
-                                        articulo.slug
-                                    ),
-                                }}
-                            />
-                            <div className="article__cover-overlay"></div>
-                        </div>
-                    ) : (
-                        <div
-                            className="article__cover article__cover--placeholder"
+                    <div className="article__cover">
+                        <ImagenConFallback
+                            className="article__cover-image"
+                            src={articulo.image_url}
+                            alt={articulo.title}
+                            loading="eager"
                             style={{
                                 viewTransitionName: nombreTransicionImagen(
                                     articulo.slug
                                 ),
                             }}
-                            aria-hidden="true"
-                        >
-                            <span className="material-symbols-outlined material-symbols-outlined--xl">
-                                sports_esports
-                            </span>
-                        </div>
-                    )}
+                        />
+                        <div className="article__cover-overlay"></div>
+                    </div>
                 </header>
                 <div className="article-content">
                     {articulo.excerpt && (
@@ -203,21 +189,10 @@ export const DetalleArticulo = ({ slug }) => {
                                 className="related__item"
                             >
                                 <div className="related__thumb">
-                                    {relacionado.image_url ? (
-                                        <img
-                                            src={relacionado.image_url}
-                                            alt={relacionado.title}
-                                        />
-                                    ) : (
-                                        <span
-                                            className="related__thumb--placeholder"
-                                            aria-hidden="true"
-                                        >
-                                            <span className="material-symbols-outlined">
-                                                sports_esports
-                                            </span>
-                                        </span>
-                                    )}
+                                    <ImagenConFallback
+                                        src={relacionado.image_url}
+                                        alt={relacionado.title}
+                                    />
                                 </div>
                                 <div className="related__meta">
                                     <span className="related__category text-label-sm">

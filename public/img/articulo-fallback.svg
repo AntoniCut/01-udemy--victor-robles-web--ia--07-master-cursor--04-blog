@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+    <defs>
+        <linearGradient id="fondo" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0d1c2d"/>
+            <stop offset="55%" stop-color="#122131"/>
+            <stop offset="100%" stop-color="#1c2b3c"/>
+        </linearGradient>
+        <radialGradient id="halo" cx="30%" cy="30%" r="55%">
+            <stop offset="0%" stop-color="#00ff9d" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="#00ff9d" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
+    <rect width="1280" height="720" fill="url(#fondo)"/>
+    <rect width="1280" height="720" fill="url(#halo)"/>
+    <g transform="translate(640 360)" fill="none" stroke="#00ff9d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+        <path d="M-120 -40 h-50 a40 40 0 0 0-40 40 v40 a40 40 0 0 0 40 40 h50"/>
+        <path d="M120 -40 h50 a40 40 0 0 1 40 40 v40 a40 40 0 0 1-40 40 h-50"/>
+        <rect x="-70" y="-55" width="140" height="110" rx="28" fill="#0d1c2d" stroke="#00ff9d"/>
+        <circle cx="-35" cy="0" r="12" fill="#00ff9d"/>
+        <circle cx="35" cy="0" r="12" fill="#00ff9d"/>
+        <path d="M-12 28 h24" stroke-width="8"/>
+        <path d="M-170 20 h30 M-155 5 v30" stroke-width="8"/>
+        <path d="M140 20 h30 M155 5 v30" stroke-width="8"/>
+    </g>
+    <text x="640" y="520" text-anchor="middle" fill="#b9cbbc" font-family="Sora, sans-serif" font-size="36" font-weight="600">GamerPulse</text>
+    <text x="640" y="565" text-anchor="middle" fill="#849587" font-family="Sora, sans-serif" font-size="22">Imagen no disponible</text>
+</svg>

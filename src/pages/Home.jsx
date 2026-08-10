@@ -7,6 +7,7 @@
 /// <reference path="../../types/types.d.js" />
 
 import { useEffect, useState } from "react";
+import { FondoImagenConFallback } from "../components/ImagenConFallback.jsx";
 import { Paginacion } from "../components/Paginacion.jsx";
 import { TarjetaArticulo } from "../components/TarjetaArticulo.jsx";
 import { formatearFecha } from "../lib/fechas.js";
@@ -144,26 +145,15 @@ export const Home = () => {
         <>
             {destacado && (
                 <section className="hero">
-                    {destacado.image_url ? (
-                        <div
-                            className="hero__media"
-                            style={{
-                                backgroundImage: `url("${destacado.image_url}")`,
-                                viewTransitionName: nombreTransicionImagen(
-                                    destacado.slug
-                                ),
-                            }}
-                        ></div>
-                    ) : (
-                        <div
-                            className="hero__media hero__media--placeholder"
-                            style={{
-                                viewTransitionName: nombreTransicionImagen(
-                                    destacado.slug
-                                ),
-                            }}
-                        ></div>
-                    )}
+                    <FondoImagenConFallback
+                        className="hero__media"
+                        src={destacado.image_url}
+                        style={{
+                            viewTransitionName: nombreTransicionImagen(
+                                destacado.slug
+                            ),
+                        }}
+                    />
                     <div className="hero__overlay"></div>
                     <div className="hero__content">
                         <div className="hero__meta">

@@ -7,6 +7,7 @@
 /// <reference path="../../types/types.d.js" />
 
 import { useEffect, useState } from "react";
+import { ImagenConFallback } from "../components/ImagenConFallback.jsx";
 import { ModalConfirmacion } from "../components/ModalConfirmacion.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
@@ -303,23 +304,11 @@ export const AdminDashboard = () => {
                                     {articulosFiltrados.map((articulo) => (
                                         <div className="data-table__row" key={articulo.id}>
                                             <div className="data-table__col--image">
-                                                {articulo.image_url ? (
-                                                    <img
-                                                        className="data-table__thumb"
-                                                        src={articulo.image_url}
-                                                        alt={articulo.title}
-                                                        loading="lazy"
-                                                    />
-                                                ) : (
-                                                    <div
-                                                        className="data-table__thumb data-table__thumb--placeholder"
-                                                        aria-hidden="true"
-                                                    >
-                                                        <span className="material-symbols-outlined">
-                                                            sports_esports
-                                                        </span>
-                                                    </div>
-                                                )}
+                                                <ImagenConFallback
+                                                    className="data-table__thumb"
+                                                    src={articulo.image_url}
+                                                    alt={articulo.title}
+                                                />
                                             </div>
                                             <div className="data-table__col--title">
                                                 <div className="data-table__title text-label-md">
