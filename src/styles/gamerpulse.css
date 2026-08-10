@@ -58,6 +58,7 @@
     --color-login-overlay-strong: rgba(5, 20, 36, 0.9);
     --color-login-overlay-soft: rgba(5, 20, 36, 0.4);
     --color-placeholder: rgba(185, 203, 188, 0.5);
+    --color-header-sticky: rgba(5, 20, 36, 0.8);
     color-scheme: dark;
 
     /* Spacing (8px rhythm, 1rem = 10px) */
@@ -1750,7 +1751,7 @@ p {
     z-index: 10;
     position: sticky;
     top: 0;
-    background-color: rgba(5, 20, 36, 0.8);
+    background-color: var(--color-header-sticky);
     backdrop-filter: blur(1.2rem);
     border-bottom: 0.1rem solid var(--color-surface-container-high);
 }

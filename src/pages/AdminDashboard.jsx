@@ -18,6 +18,7 @@ import {
     nombreCategoria,
     obtenerDelAutor,
 } from "../services/articulos.js";
+import { obtenerTodas } from "../services/categorias.js";
 
 /**
  * --------------------------------
@@ -51,6 +52,12 @@ export const AdminDashboard = () => {
     /** - `término de búsqueda del panel` */
     const [terminoBusqueda, setTerminoBusqueda] = useState("");
 
+    /** - `identificador de categoría para filtrar (vacío = todas)` */
+    const [categoriaFiltro, setCategoriaFiltro] = useState("");
+
+    /** @type {[Categoria[], Function]} - `categorías del selector de filtro` */
+    const [categorias, setCategorias] = useState([]);
+
     /** - `indica si la tabla se está cargando` */
     const [cargando, setCargando] = useState(true);
 
@@ -74,19 +81,45 @@ export const AdminDashboard = () => {
         cargarArticulos();
     }, [usuario.id]);
 
+    useEffect(() => {
+        //  -----  cargar categorías para el filtro del listado  -----
+        const cargarCategorias = async () => {
+            const resultado = await obtenerTodas();
+            setCategorias(resultado.categorias);
+
+            if (resultado.error) {
+                mostrarAviso("No se pudieron cargar las categorías.", "error");
+            }
+        };
+
+        cargarCategorias();
+    }, []);
+
     /** - `término de búsqueda normalizado para comparar` */
     const terminoNormalizado = normalizar(terminoBusqueda);
 
-    /** @type {Articulo[]} - `artículos que coinciden con la búsqueda en título o extracto` */
-    const articulosFiltrados = terminoNormalizado
-        ? articulos.filter(
-              (articulo) =>
-                  normalizar(articulo.title).includes(terminoNormalizado) ||
-                  normalizar(articulo.excerpt ?? "").includes(
-                      terminoNormalizado
-                  )
-          )
-        : articulos;
+    /** @type {Articulo[]} - `artículos que coinciden con texto y categoría` */
+    const articulosFiltrados = articulos.filter((articulo) => {
+        //  -----  filtro por categoría seleccionada  -----
+        if (categoriaFiltro && articulo.category_id !== categoriaFiltro) {
+            return false;
+        }
+
+        //  -----  sin término de texto, basta con la categoría  -----
+        if (!terminoNormalizado) {
+            return true;
+        }
+
+        return (
+            normalizar(articulo.title).includes(terminoNormalizado) ||
+            normalizar(articulo.excerpt ?? "").includes(terminoNormalizado)
+        );
+    });
+
+    /** - `nombre de la categoría activa en el filtro` */
+    const nombreFiltroCategoria =
+        categorias.find((categoria) => categoria.id === categoriaFiltro)?.name ??
+        "";
 
     //  -----  click en publicar / despublicar un artículo  -----
     const alCambiarPublicado = async (evento, articulo) => {
@@ -158,7 +191,7 @@ export const AdminDashboard = () => {
                         </Enlace>
                     </header>
                     <div className="page-dashboard__buscar">
-                        <div className="input__control">
+                        <div className="input__control page-dashboard__buscar-texto">
                             <input
                                 className="input__field input__field--low input__field--icon"
                                 type="text"
@@ -175,6 +208,34 @@ export const AdminDashboard = () => {
                             >
                                 search
                             </span>
+                        </div>
+                        <div className="input page-dashboard__buscar-categoria">
+                            <label
+                                className="visualmente-oculto"
+                                htmlFor="filtro-categoria"
+                            >
+                                Filtrar por categoría
+                            </label>
+                            <select
+                                className="input__field input__field--low text-body-md"
+                                id="filtro-categoria"
+                                name="filtro-categoria"
+                                aria-label="Filtrar por categoría"
+                                value={categoriaFiltro}
+                                onChange={(evento) =>
+                                    setCategoriaFiltro(evento.target.value)
+                                }
+                            >
+                                <option value="">Todas las categorías</option>
+                                {categorias.map((categoria) => (
+                                    <option
+                                        key={categoria.id}
+                                        value={categoria.id}
+                                    >
+                                        {categoria.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
                     <div className="card data-table data-table--blog">
@@ -204,20 +265,25 @@ export const AdminDashboard = () => {
                                         manage_search
                                     </span>
                                     <h2 className="estado-vacio__titulo text-headline-md">
-                                        No se encontraron artículos para “
-                                        {terminoBusqueda}”
+                                        {terminoBusqueda.trim()
+                                            ? `No se encontraron artículos para “${terminoBusqueda}”`
+                                            : nombreFiltroCategoria
+                                              ? `No hay artículos en “${nombreFiltroCategoria}”`
+                                              : "No se encontraron artículos"}
                                     </h2>
                                     <p className="estado-vacio__texto text-body-md">
-                                        Prueba con otro término o limpia la búsqueda.
+                                        Prueba con otro término, otra categoría o
+                                        limpia los filtros.
                                     </p>
                                     <button
                                         className="button button--secondary button--sm text-label-md"
                                         type="button"
-                                        onClick={() =>
-                                            setTerminoBusqueda("")
-                                        }
+                                        onClick={() => {
+                                            setTerminoBusqueda("");
+                                            setCategoriaFiltro("");
+                                        }}
                                     >
-                                        Limpiar búsqueda
+                                        Limpiar filtros
                                     </button>
                                 </section>
                             )}
