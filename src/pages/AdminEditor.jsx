@@ -17,6 +17,7 @@ import {
     generarSlug,
     obtenerPorId,
 } from "../services/articulos.js";
+import { obtenerTodas } from "../services/categorias.js";
 
 /**
  * ----------------------------------
@@ -43,6 +44,12 @@ export const AdminEditor = ({ id }) => {
     /** - `URL de la imagen de portada` */
     const [imagenUrl, setImagenUrl] = useState("");
 
+    /** - `identificador de la categoría seleccionada` */
+    const [categoriaId, setCategoriaId] = useState("");
+
+    /** @type {[Categoria[], Function]} - `categorías disponibles en el selector` */
+    const [categorias, setCategorias] = useState([]);
+
     /** - `indica si el artículo está publicado` */
     const [publicado, setPublicado] = useState(false);
 
@@ -54,6 +61,20 @@ export const AdminEditor = ({ id }) => {
 
     /** - `indica si se está guardando el artículo` */
     const [guardando, setGuardando] = useState(false);
+
+    useEffect(() => {
+        //  -----  cargar las categorías del selector  -----
+        const cargarCategorias = async () => {
+            const resultado = await obtenerTodas();
+            setCategorias(resultado.categorias);
+
+            if (resultado.error) {
+                mostrarAviso("No se pudieron cargar las categorías.", "error");
+            }
+        };
+
+        cargarCategorias();
+    }, []);
 
     useEffect(() => {
         //  -----  si hay id, cargar el artículo a editar  -----
@@ -76,6 +97,7 @@ export const AdminEditor = ({ id }) => {
             setContenido(articulo.content);
             setExtracto(articulo.excerpt ?? "");
             setImagenUrl(articulo.image_url ?? "");
+            setCategoriaId(articulo.category_id ?? "");
             setPublicado(articulo.published);
             setModificado(articulo.updated_at);
             setCargando(false);
@@ -107,6 +129,7 @@ export const AdminEditor = ({ id }) => {
             content: contenido.trim(),
             excerpt: extracto.trim() === "" ? null : extracto.trim(),
             image_url: imagenUrl.trim() === "" ? null : imagenUrl.trim(),
+            category_id: categoriaId === "" ? null : categoriaId,
             published: publicar,
         };
 
@@ -286,6 +309,36 @@ export const AdminEditor = ({ id }) => {
                                         Metadatos
                                     </h2>
                                     <div className="editor-panel__fields">
+                                        <div className="input">
+                                            <label
+                                                className="input__label text-label-sm"
+                                                htmlFor="categoria"
+                                            >
+                                                Categoría Principal
+                                            </label>
+                                            <select
+                                                className="input__field input__field--low text-body-md"
+                                                id="categoria"
+                                                name="categoria"
+                                                aria-label="Categoría Principal"
+                                                value={categoriaId}
+                                                onChange={(evento) =>
+                                                    setCategoriaId(evento.target.value)
+                                                }
+                                            >
+                                                <option value="">
+                                                    Selecciona una categoría
+                                                </option>
+                                                {categorias.map((categoria) => (
+                                                    <option
+                                                        key={categoria.id}
+                                                        value={categoria.id}
+                                                    >
+                                                        {categoria.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
                                         <div className="input">
                                             <label
                                                 className="input__label text-label-sm"

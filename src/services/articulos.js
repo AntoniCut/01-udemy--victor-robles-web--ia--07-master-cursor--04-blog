@@ -11,11 +11,26 @@ import { supabase } from "../lib/supabase.js";
 /** - `número de artículos por página en el listado público` */
 export const ARTICULOS_POR_PAGINA = 6;
 
+/** - `columnas del artículo incluyendo la categoría embebida` */
+const SELECT_ARTICULO = "*, category:categories(id, name, slug)";
+
 /** @type {Map<number, { articulos: Articulo[], total: number }>} - `caché del listado público por página` */
 const cachePublicados = new Map();
 
 /** @type {Map<string, Articulo>} - `caché de artículos por slug` */
 const cachePorSlug = new Map();
+
+/**
+ * ---------------------------------------------
+ * -----  `nombreCategoria(articulo)`  -----
+ * ---------------------------------------------
+ * - Devuelve el nombre de la categoría del artículo o un texto por defecto.
+ * @param {Articulo} articulo - Artículo del que leer la categoría.
+ * @return {string} - Nombre visible de la categoría.
+ */
+export const nombreCategoria = (articulo) => {
+    return articulo.category?.name ?? "Sin categoría";
+};
 
 /**
  * ---------------------------------------
@@ -84,7 +99,7 @@ export const obtenerPublicados = async (pagina) => {
 
     const { data, count, error } = await supabase
         .from("articles")
-        .select("*", { count: "exact" })
+        .select(SELECT_ARTICULO, { count: "exact" })
         .eq("published", true)
         .order("created_at", { ascending: false })
         .range(desde, hasta);
@@ -135,7 +150,7 @@ export const buscarArticulos = async (termino, pagina) => {
 
     const { data, count, error } = await supabase
         .from("articles")
-        .select("*", { count: "exact" })
+        .select(SELECT_ARTICULO, { count: "exact" })
         .eq("published", true)
         .or(`title.ilike.${patron},excerpt.ilike.${patron}`)
         .order("created_at", { ascending: false })
@@ -163,7 +178,7 @@ export const buscarArticulos = async (termino, pagina) => {
 export const obtenerPorSlug = async (slug) => {
     const { data } = await supabase
         .from("articles")
-        .select("*")
+        .select(SELECT_ARTICULO)
         .eq("slug", slug)
         .maybeSingle();
 
@@ -186,7 +201,7 @@ export const obtenerPorSlug = async (slug) => {
 export const obtenerRelacionados = async (slugActual) => {
     const { data } = await supabase
         .from("articles")
-        .select("*")
+        .select(SELECT_ARTICULO)
         .eq("published", true)
         .neq("slug", slugActual)
         .order("created_at", { ascending: false })
@@ -209,7 +224,7 @@ export const obtenerRelacionados = async (slugActual) => {
 export const obtenerPorId = async (id) => {
     const { data } = await supabase
         .from("articles")
-        .select("*")
+        .select(SELECT_ARTICULO)
         .eq("id", id)
         .maybeSingle();
 
@@ -227,7 +242,7 @@ export const obtenerPorId = async (id) => {
 export const obtenerDelAutor = async (autorId) => {
     const { data, error } = await supabase
         .from("articles")
-        .select("*")
+        .select(SELECT_ARTICULO)
         .eq("author_id", autorId)
         .order("created_at", { ascending: false });
 
@@ -265,7 +280,7 @@ export const crearArticulo = async (articulo) => {
     const { data, error } = await supabase
         .from("articles")
         .insert(articulo)
-        .select()
+        .select(SELECT_ARTICULO)
         .single();
 
     //  -----  si el slug está duplicado, reintentar con un sufijo único  -----
@@ -276,7 +291,7 @@ export const crearArticulo = async (articulo) => {
         const reintento = await supabase
             .from("articles")
             .insert({ ...articulo, slug: slugAlternativo })
-            .select()
+            .select(SELECT_ARTICULO)
             .single();
 
         if (!reintento.error) {
@@ -307,7 +322,7 @@ export const actualizarArticulo = async (id, cambios) => {
         .from("articles")
         .update(cambios)
         .eq("id", id)
-        .select()
+        .select(SELECT_ARTICULO)
         .single();
 
     if (!error) {

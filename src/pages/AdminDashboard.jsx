@@ -15,6 +15,7 @@ import { Enlace } from "../router/Router.jsx";
 import {
     cambiarPublicado,
     eliminarArticulo,
+    nombreCategoria,
     obtenerDelAutor,
 } from "../services/articulos.js";
 
@@ -225,6 +226,9 @@ export const AdminDashboard = () => {
                                 <div className="data-table__head text-label-sm">
                                     <div className="data-table__col--image">Imagen</div>
                                     <div className="data-table__col--title">Título</div>
+                                    <div className="data-table__col--category">
+                                        Categoría
+                                    </div>
                                     <div className="data-table__col--date">Fecha</div>
                                     <div className="data-table__col--status">Estado</div>
                                     <div className="data-table__col--actions">Acciones</div>
@@ -258,6 +262,9 @@ export const AdminDashboard = () => {
                                                 <div className="data-table__subtitle text-label-sm">
                                                     {articulo.excerpt ?? ""}
                                                 </div>
+                                            </div>
+                                            <div className="data-table__col--category text-body-sm data-table__category">
+                                                {nombreCategoria(articulo)}
                                             </div>
                                             <div className="data-table__col--date text-body-sm data-table__date">
                                                 {formatearFecha(articulo.created_at)}

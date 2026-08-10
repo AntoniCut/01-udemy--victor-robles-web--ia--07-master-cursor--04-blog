@@ -12,6 +12,7 @@ import {
     nombreTransicionTitulo,
 } from "../lib/transiciones.js";
 import { Enlace } from "../router/Router.jsx";
+import { nombreCategoria } from "../services/articulos.js";
 
 /**
  * --------------------------------------------
@@ -59,7 +60,9 @@ export const TarjetaArticulo = ({ articulo }) => {
                 </div>
                 <div className="article-card__body">
                     <div className="article-card__meta">
-                        <span className="badge text-label-sm">Noticia</span>
+                        <span className="badge text-label-sm">
+                            {nombreCategoria(articulo)}
+                        </span>
                         <span className="article-card__date text-label-sm">
                             {formatearFecha(articulo.created_at)}
                         </span>

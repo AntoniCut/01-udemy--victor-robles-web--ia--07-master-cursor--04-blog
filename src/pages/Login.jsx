@@ -5,6 +5,7 @@
 */
 
 import { useEffect, useState } from "react";
+import { BotonTema } from "../components/BotonTema.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useRouter } from "../router/Router.jsx";
 
@@ -108,6 +109,9 @@ export const Login = () => {
 
     return (
         <div className="page-login">
+            <div className="page-login__tema">
+                <BotonTema />
+            </div>
             <div className="page-login__glow-bar" aria-hidden="true"></div>
             <main className="login">
                 <div className="login__brand">

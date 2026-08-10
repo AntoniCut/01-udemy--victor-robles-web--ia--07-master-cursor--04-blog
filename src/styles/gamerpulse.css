@@ -53,6 +53,12 @@
     --color-primary-soft-10: rgba(0, 255, 157, 0.1);
     --color-primary-soft-05: rgba(0, 255, 157, 0.05);
     --color-outline-faint: rgba(59, 74, 63, 0.3);
+    --color-hover-overlay: rgba(255, 255, 255, 0.05);
+    --color-hover-faint: rgba(255, 255, 255, 0.02);
+    --color-login-overlay-strong: rgba(5, 20, 36, 0.9);
+    --color-login-overlay-soft: rgba(5, 20, 36, 0.4);
+    --color-placeholder: rgba(185, 203, 188, 0.5);
+    color-scheme: dark;
 
     /* Spacing (8px rhythm, 1rem = 10px) */
     --space-xs: 0.4rem;
@@ -126,6 +132,10 @@
 
 html {
     font-size: 62.5%;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary-container) var(--color-surface);
+    scrollbar-width: 5px;
 }
 
 body {
@@ -313,7 +323,7 @@ p {
 
 .button--primary {
     background-color: var(--color-primary-container);
-    color: var(--color-canvas);
+    color: var(--color-on-primary-container);
     font-weight: 700;
 }
 
@@ -346,7 +356,7 @@ p {
 }
 
 .button--icon:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--color-hover-overlay);
     color: var(--color-primary);
 }
 
@@ -493,7 +503,7 @@ p {
 }
 
 .input__field::placeholder {
-    color: rgba(185, 203, 188, 0.5);
+    color: var(--color-placeholder);
 }
 
 .input__field:focus {
@@ -1240,7 +1250,7 @@ p {
     background-color: var(--color-surface-dim);
     background-image:
         radial-gradient(circle at 50% 0%, var(--color-surface-container-high) 0%, transparent 70%),
-        linear-gradient(0deg, rgba(5, 20, 36, 0.9) 0%, rgba(5, 20, 36, 0.4) 100%);
+        linear-gradient(0deg, var(--color-login-overlay-strong) 0%, var(--color-login-overlay-soft) 100%);
     background-size: cover;
     background-position: center;
 }
@@ -1524,11 +1534,12 @@ p {
 .data-table__row {
     display: grid;
     grid-template-columns:
-        auto
-        minmax(0, 2.4fr)
+        9.6rem
+        minmax(0, 2fr)
+        minmax(0, 1.2fr)
         minmax(0, 1fr)
         minmax(0, 1fr)
-        auto;
+        10rem;
     gap: var(--space-sm);
     align-items: center;
     min-width: 0;
@@ -1599,7 +1610,7 @@ p {
 }
 
 .data-table__row:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: var(--color-hover-faint);
 }
 
 .data-table__row:last-child {
@@ -2270,7 +2281,7 @@ p {
 
 .article__tag:hover {
     background-color: var(--color-primary-container);
-    color: var(--color-surface);
+    color: var(--color-on-primary-container);
 }
 
 .article__share {

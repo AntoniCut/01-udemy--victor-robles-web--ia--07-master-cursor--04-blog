@@ -6,6 +6,7 @@
 
 import { useAuth } from "../context/AuthContext.jsx";
 import { Enlace } from "../router/Router.jsx";
+import { BotonTema } from "./BotonTema.jsx";
 import { Buscador } from "./Buscador.jsx";
 
 /**
@@ -39,6 +40,7 @@ export const Cabecera = () => {
             </div>
             <Buscador />
             <div className="top-nav__actions">
+                <BotonTema />
                 {usuario ? (
                     <Enlace
                         href="/admin"

@@ -13,6 +13,22 @@
             content="GamerPulse - Blog de noticias y artículos de videojuegos"
         />
         <title>GamerPulse - Blog de Videojuegos</title>
+        <script>
+            (function () {
+                try {
+                    var tema = localStorage.getItem("gamerpulse-tema");
+                    if (tema !== "claro" && tema !== "oscuro") {
+                        tema = window.matchMedia("(prefers-color-scheme: light)")
+                            .matches
+                            ? "claro"
+                            : "oscuro";
+                    }
+                    document.documentElement.setAttribute("data-theme", tema);
+                } catch (error) {
+                    document.documentElement.setAttribute("data-theme", "oscuro");
+                }
+            })();
+        </script>
         <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />

@@ -202,16 +202,17 @@
     max-width: 48rem;
 }
 
-/* --- Tabla del panel sin columna de categoría --- */
+/* --- Tabla del panel con columna de categoría --- */
 
 .data-table--blog .data-table__head,
 .data-table--blog .data-table__row {
     grid-template-columns:
-        auto
-        minmax(0, 2.4fr)
+        9.6rem
+        minmax(0, 2fr)
+        minmax(0, 1.2fr)
         minmax(0, 1fr)
         minmax(0, 1fr)
-        auto;
+        10rem;
 }
 
 /* --- Barra superior del panel en móvil --- */
@@ -507,4 +508,67 @@
 .page-dashboard__buscar {
     max-width: 40rem;
     margin-bottom: var(--space-lg);
+}
+
+/* --- Tema claro --- */
+
+[data-theme="claro"] {
+    --color-surface: #f3f6f8;
+    --color-surface-dim: #e7eef3;
+    --color-surface-bright: #ffffff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #eef3f6;
+    --color-surface-container: #e4ebf0;
+    --color-surface-container-high: #d7e1e8;
+    --color-surface-container-highest: #c8d5de;
+    --color-surface-variant: #d7e1e8;
+    --color-on-surface: #12202b;
+    --color-on-surface-variant: #3f5360;
+    --color-background: #f3f6f8;
+    --color-on-background: #12202b;
+    --color-primary: #005c38;
+    --color-on-primary: #f4fff3;
+    --color-primary-container: #00c77a;
+    --color-on-primary-container: #00391f;
+    --color-primary-fixed: #56ffa8;
+    --color-primary-fixed-dim: #00a866;
+    --color-surface-tint: #00a866;
+    --color-secondary: #3d4a5c;
+    --color-on-secondary: #f2f5fa;
+    --color-secondary-container: #d5dde9;
+    --color-on-secondary-container: #2a3545;
+    --color-outline: #6b7f74;
+    --color-outline-variant: #b7c5bb;
+    --color-error: #b3261e;
+    --color-on-error: #ffffff;
+    --color-error-container: #f9dedc;
+    --color-on-error-container: #410e0b;
+    --color-neutral: #5b6b7c;
+    --color-canvas: #ffffff;
+    --color-raised: #ffffff;
+    --color-border-subtle: rgba(18, 32, 43, 0.08);
+    --color-border-muted: rgba(18, 32, 43, 0.14);
+    --color-primary-glow: rgba(0, 199, 122, 0.22);
+    --color-primary-glow-strong: rgba(0, 199, 122, 0.35);
+    --color-primary-soft: rgba(0, 199, 122, 0.16);
+    --color-primary-soft-10: rgba(0, 199, 122, 0.1);
+    --color-primary-soft-05: rgba(0, 199, 122, 0.05);
+    --color-outline-faint: rgba(183, 197, 187, 0.55);
+    --color-hover-overlay: rgba(18, 32, 43, 0.06);
+    --color-hover-faint: rgba(18, 32, 43, 0.03);
+    --color-login-overlay-strong: rgba(243, 246, 248, 0.95);
+    --color-login-overlay-soft: rgba(243, 246, 248, 0.55);
+    --color-placeholder: rgba(63, 83, 96, 0.55);
+    color-scheme: light;
+}
+
+.boton-tema {
+    flex-shrink: 0;
+}
+
+.page-login__tema {
+    position: fixed;
+    top: var(--space-md);
+    right: var(--space-md);
+    z-index: var(--z-sticky);
 }

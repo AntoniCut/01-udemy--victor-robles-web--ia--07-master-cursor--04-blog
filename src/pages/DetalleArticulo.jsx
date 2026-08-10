@@ -15,6 +15,7 @@ import {
 import { Enlace } from "../router/Router.jsx";
 import {
     leerCachePorSlug,
+    nombreCategoria,
     obtenerPorSlug,
     obtenerRelacionados,
 } from "../services/articulos.js";
@@ -128,7 +129,9 @@ export const DetalleArticulo = ({ slug }) => {
         <>
             <article className="article">
                 <header className="article__header">
-                    <div className="badge article__badge">Noticia</div>
+                    <div className="badge article__badge">
+                        {nombreCategoria(articulo)}
+                    </div>
                     <h1
                         className="article__title text-headline-xl"
                         style={{
@@ -224,7 +227,7 @@ export const DetalleArticulo = ({ slug }) => {
                                 </div>
                                 <div className="related__meta">
                                     <span className="related__category text-label-sm">
-                                        Noticia
+                                        {nombreCategoria(relacionado)}
                                     </span>
                                     <h3 className="related__headline text-body-md">
                                         {relacionado.title}

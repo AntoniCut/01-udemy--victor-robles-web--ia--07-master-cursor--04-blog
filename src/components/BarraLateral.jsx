@@ -6,6 +6,7 @@
 
 import { useAuth } from "../context/AuthContext.jsx";
 import { Enlace, useRouter } from "../router/Router.jsx";
+import { BotonTema } from "./BotonTema.jsx";
 
 /**
  * -----------------------------
@@ -66,6 +67,7 @@ export const BarraLateral = () => {
                     </Enlace>
                 </div>
                 <div className="side-nav__footer">
+                    <BotonTema variante="nav" />
                     <button
                         className="side-nav__link side-nav__link--danger"
                         type="button"
@@ -81,6 +83,7 @@ export const BarraLateral = () => {
                     GamerPulse
                 </Enlace>
                 <div className="admin-topbar__acciones">
+                    <BotonTema />
                     <Enlace
                         href="/admin/nuevo"
                         className="button button--primary button--sm text-label-md"

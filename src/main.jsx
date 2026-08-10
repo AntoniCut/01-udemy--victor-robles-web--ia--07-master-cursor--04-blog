@@ -7,6 +7,7 @@
 import { createRoot } from "react-dom/client";
 import { App } from "./App.jsx";
 import { ProveedorAuth } from "./context/AuthContext.jsx";
+import { ProveedorTema } from "./context/TemaContext.jsx";
 import { ProveedorToast } from "./context/ToastContext.jsx";
 import { ProveedorRouter } from "./router/Router.jsx";
 import "./styles/gamerpulse.css";
@@ -18,11 +19,13 @@ const contenedorRaiz = /** @type {HTMLDivElement} */ (
 );
 
 createRoot(contenedorRaiz).render(
-    <ProveedorRouter>
-        <ProveedorAuth>
-            <ProveedorToast>
-                <App />
-            </ProveedorToast>
-        </ProveedorAuth>
-    </ProveedorRouter>
+    <ProveedorTema>
+        <ProveedorRouter>
+            <ProveedorAuth>
+                <ProveedorToast>
+                    <App />
+                </ProveedorToast>
+            </ProveedorAuth>
+        </ProveedorRouter>
+    </ProveedorTema>
 );
