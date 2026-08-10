@@ -4,6 +4,8 @@
     *  -----------------------------------------------  *
 */
 
+import { htmlATextoPlano, pareceHtml } from "./html.js";
+
 /**
  * ----------------------------------
  * -----  `formatearFecha(iso)`  -----
@@ -26,11 +28,16 @@ export const formatearFecha = (iso) => {
  * -----  `calcularMinutosLectura(contenido)`  -----
  * ----------------------------------------------
  * - Estima los minutos de lectura de un texto (200 palabras por minuto).
- * @param {string} contenido - Texto completo del artículo.
+ * @param {string} contenido - Texto completo del artículo (plano o HTML).
  * @return {number} - Minutos de lectura estimados (mínimo 1).
  */
 export const calcularMinutosLectura = (contenido) => {
+    /** - `texto visible sin etiquetas HTML` */
+    const texto = pareceHtml(contenido)
+        ? htmlATextoPlano(contenido)
+        : contenido;
+
     /** - `número de palabras del contenido` */
-    const palabras = contenido.trim().split(/\s+/).length;
+    const palabras = texto.trim().split(/\s+/).filter(Boolean).length;
     return Math.max(1, Math.round(palabras / 200));
 };

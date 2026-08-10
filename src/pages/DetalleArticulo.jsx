@@ -7,6 +7,7 @@
 /// <reference path="../../types/types.d.js" />
 
 import { useEffect, useState } from "react";
+import { ContenidoHtml } from "../components/ContenidoHtml.jsx";
 import { calcularMinutosLectura, formatearFecha } from "../lib/fechas.js";
 import {
     nombreTransicionImagen,
@@ -88,11 +89,6 @@ export const DetalleArticulo = ({ slug }) => {
             cancelado = true;
         };
     }, [slug]);
-
-    /** @type {string[]} - `párrafos del contenido del artículo` */
-    const parrafos = articulo
-        ? articulo.content.split(/\n\s*\n/).filter((texto) => texto.trim() !== "")
-        : [];
 
     //  -----  spinner solo si no hay artículo en pantalla  -----
     if (cargando && !articulo) {
@@ -188,9 +184,7 @@ export const DetalleArticulo = ({ slug }) => {
                             {articulo.excerpt}
                         </p>
                     )}
-                    {parrafos.map((parrafo, indice) => (
-                        <p key={indice}>{parrafo}</p>
-                    ))}
+                    <ContenidoHtml html={articulo.content} />
                 </div>
             </article>
             {relacionados.length > 0 && (

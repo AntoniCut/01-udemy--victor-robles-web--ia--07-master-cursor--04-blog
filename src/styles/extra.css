@@ -276,23 +276,105 @@
     border-color: var(--color-primary-container);
 }
 
-/* --- Área de contenido del editor (textarea) --- */
+/* --- Editor enriquecido (WYSIWYG) --- */
 
-.rich-editor__area {
-    flex: 1;
-    width: 100%;
-    min-height: 40rem;
-    padding: var(--space-lg);
-    border: none;
-    outline: none;
-    resize: vertical;
-    background-color: var(--color-surface-container-low);
-    color: var(--color-on-surface);
-    line-height: 1.7;
+.rich-editor__tool--activo {
+    color: var(--color-primary-container);
+    background-color: var(--color-primary-soft);
 }
 
-.rich-editor__area::placeholder {
+.rich-editor__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-bottom: 0.1rem solid var(--color-surface-container-high);
+    background-color: var(--color-surface-container);
+}
+
+.rich-editor__panel-fila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.rich-editor__panel-fila .input__field {
+    flex: 1 1 18rem;
+    min-width: 0;
+}
+
+.rich-editor__canvas {
+    outline: none;
+    color: var(--color-on-surface);
+    line-height: 1.7;
+    min-height: 40rem;
+}
+
+.rich-editor__canvas:focus {
+    outline: none;
+}
+
+.rich-editor__canvas--vacio:before {
+    content: attr(data-placeholder);
     color: var(--color-on-surface-variant);
+    pointer-events: none;
+    float: left;
+    height: 0;
+}
+
+.rich-editor__canvas h2 {
+    font-size: var(--font-headline-md-size);
+    font-weight: 700;
+    margin: var(--space-md) 0 var(--space-sm);
+    color: var(--color-primary);
+}
+
+.rich-editor__canvas h3 {
+    font-size: var(--font-headline-sm-size);
+    font-weight: 600;
+    margin: var(--space-md) 0 var(--space-sm);
+    color: var(--color-primary);
+}
+
+.rich-editor__canvas p {
+    margin-bottom: var(--space-md);
+}
+
+.rich-editor__canvas ul,
+.rich-editor__canvas ol {
+    margin: 0 0 var(--space-md);
+    padding-left: 2.4rem;
+}
+
+.rich-editor__canvas blockquote {
+    margin: var(--space-md) 0;
+    padding: var(--space-md) var(--space-lg);
+    border-left: 0.3rem solid var(--color-primary-container);
+    background-color: var(--color-primary-soft-05);
+    color: var(--color-on-surface-variant);
+}
+
+.rich-editor__canvas pre {
+    margin: var(--space-md) 0;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-container-highest);
+    overflow-x: auto;
+    font-family: ui-monospace, monospace;
+    font-size: var(--font-body-sm-size);
+}
+
+.rich-editor__canvas a {
+    color: var(--color-primary-container);
+    text-decoration: underline;
+}
+
+.rich-editor__canvas img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: var(--space-md) 0;
 }
 
 /* --- Campos extra del panel lateral del editor --- */

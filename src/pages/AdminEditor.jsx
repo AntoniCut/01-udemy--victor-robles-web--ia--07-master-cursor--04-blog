@@ -7,9 +7,11 @@
 /// <reference path="../../types/types.d.js" />
 
 import { useEffect, useState } from "react";
+import { EditorEnriquecido } from "../components/EditorEnriquecido.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useToast } from "../context/ToastContext.jsx";
 import { formatearFecha } from "../lib/fechas.js";
+import { contenidoHtmlVacio, sanitizarHtml } from "../lib/html.js";
 import { useRouter } from "../router/Router.jsx";
 import {
     actualizarArticulo,
@@ -116,7 +118,7 @@ export const AdminEditor = ({ id }) => {
      */
     const guardar = async (publicar) => {
         //  -----  validación visual de los campos obligatorios  -----
-        if (titulo.trim() === "" || contenido.trim() === "") {
+        if (titulo.trim() === "" || contenidoHtmlVacio(contenido)) {
             mostrarAviso("El título y el contenido son obligatorios.", "error");
             return;
         }
@@ -126,7 +128,7 @@ export const AdminEditor = ({ id }) => {
         /** - `datos comunes del artículo a guardar` */
         const datos = {
             title: titulo.trim(),
-            content: contenido.trim(),
+            content: sanitizarHtml(contenido),
             excerpt: extracto.trim() === "" ? null : extracto.trim(),
             image_url: imagenUrl.trim() === "" ? null : imagenUrl.trim(),
             category_id: categoriaId === "" ? null : categoriaId,
@@ -250,21 +252,11 @@ export const AdminEditor = ({ id }) => {
                                         aria-hidden="true"
                                     ></div>
                                 </div>
-                                <div className="card card--panel rich-editor">
-                                    <label className="visualmente-oculto" htmlFor="contenido">
-                                        Contenido del artículo
-                                    </label>
-                                    <textarea
-                                        className="rich-editor__area text-body-md"
-                                        id="contenido"
-                                        name="contenido"
-                                        placeholder="Comienza a escribir tu artículo aquí... (separa los párrafos con una línea en blanco)"
-                                        value={contenido}
-                                        onChange={(evento) =>
-                                            setContenido(evento.target.value)
-                                        }
-                                    ></textarea>
-                                </div>
+                                <EditorEnriquecido
+                                    key={id ?? "nuevo"}
+                                    valorInicial={contenido}
+                                    alCambiar={setContenido}
+                                />
                             </div>
                             <aside className="page-editor__aside">
                                 <div className="card card--panel editor-panel">
